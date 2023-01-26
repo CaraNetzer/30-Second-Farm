@@ -14,6 +14,10 @@ end
 
 function PlayerIdleState:update(dt)
     print('updateee')
+    print(self.entity.currentAnimation.frames[1])
+
+    self.entity:update()
+
     if love.keyboard.isDown('left') or love.keyboard.isDown('right') or
        love.keyboard.isDown('up') or love.keyboard.isDown('down') then
         self.entity:changeState('walk')
@@ -23,14 +27,12 @@ function PlayerIdleState:update(dt)
         --self.entity:changeState('swing-sword')
     end
 
-
-    if love.keyboard.wasPressed('return') then
-    end
 end
 
 function PlayerIdleState:render()
+    self.entity:render()
 
-    print('here')
+    print(self.entity.currentAnimation.frames[1])
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
         math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))

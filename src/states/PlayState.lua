@@ -37,10 +37,12 @@ function PlayState:update(dt)
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gStateMachine:change('start')
     end
+
+    self.player:update()
 end
 
 function PlayState:render()  
-
+    self.player:render()
     
     love.graphics.setColor(0, 1, 153/255, 1)
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)

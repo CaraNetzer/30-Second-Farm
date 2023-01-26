@@ -65,8 +65,10 @@ end
 function Player:update(dt)
     self.stateMachine:update(dt)
 
+    print('here player update')
     if self.currentAnimation then
         self.currentAnimation:update(dt)
+        print(self.currentAnimation.frames[1])
     end
 end
 

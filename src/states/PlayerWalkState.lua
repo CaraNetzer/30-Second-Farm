@@ -13,6 +13,7 @@ function PlayerWalkState:init(player)
 end
 
 function PlayerWalkState:update(dt)
+    self.entity:update()
 
     local dx,dy = self.entity.x - gCamera.x, self.entity.y - gCamera.y
     gCamera:move(dx/2, dy/2)
@@ -51,6 +52,8 @@ end
 function PlayerWalkState:render()
 
     gCamera:attach()
+
+    self.entity:render()
 
     local anim = self.entity.currentAnimation
     love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
