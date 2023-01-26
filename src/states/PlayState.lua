@@ -18,6 +18,7 @@ function PlayState:init()
         -- rendering and collision offset for spaced sprites
         offsetY = 5
     }
+    print('I am in the play state')
 
     
 

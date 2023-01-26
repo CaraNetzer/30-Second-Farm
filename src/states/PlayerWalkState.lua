@@ -4,6 +4,8 @@ PlayerWalkState = Class{__includes = EntityWalkState}
 
 function PlayerWalkState:init(player)
     self.entity = player
+    self.entity:changeAnimation('walk-down')
+    print('I am in the walk state')
 
     -- render offset for spaced character sprite; negated in render function of state
     self.entity.offsetY = 5

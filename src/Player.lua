@@ -58,6 +58,10 @@ function Player:changeState(name, p)
     self.stateMachine:change(name, p)
 end
 
+function Player:changeAnimation(name)
+    self.currentAnimation = self.animations[name]
+end
+
 function Player:update(dt)
     self.stateMachine:update(dt)
 
