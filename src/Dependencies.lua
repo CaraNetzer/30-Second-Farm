@@ -8,6 +8,12 @@ Camera = require "lib/camera"
 
 
 --require every file besides main
+require 'src/states/BaseState'
+require 'src/states/StartState'
+require 'src/states/PlayState'
+require 'src/states/PlayerWalkState'
+require 'src/states/PlayerIdleState'
+
 require 'src/StateMachine'
 require 'src/Constants'
 require 'src/Animation'
@@ -15,11 +21,6 @@ require 'src/Player'
 require 'src/entity_defs'
 require 'src/Util'
 
-require 'src/states/BaseState'
-require 'src/states/StartState'
-require 'src/states/PlayState'
-require 'src/states/PlayerWalkState'
-require 'src/states/PlayerIdleState'
 
 gTextures = {
     ['character-walk'] = love.graphics.newImage('graphics/character_walk.png')

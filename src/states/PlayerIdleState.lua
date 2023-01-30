@@ -1,6 +1,6 @@
 
 
-PlayerIdleState = Class{__includes = EntityIdleState}
+PlayerIdleState = Class{__includes = BaseState}
 
 function PlayerIdleState:enter(player)
     self.entity = player
@@ -13,10 +13,7 @@ function PlayerIdleState:enter(player)
 end
 
 function PlayerIdleState:update(dt)
-    print('updateee')
-    print(self.entity.currentAnimation.frames[1])
 
-    self.entity:update()
 
     if love.keyboard.isDown('left') or love.keyboard.isDown('right') or
        love.keyboard.isDown('up') or love.keyboard.isDown('down') then
@@ -32,13 +29,6 @@ end
 function PlayerIdleState:render()
     self.entity:render()
 
-    print(self.entity.currentAnimation.frames[1])
-    local anim = self.entity.currentAnimation
-    love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-        math.floor(self.entity.x - self.entity.offsetX), math.floor(self.entity.y - self.entity.offsetY))
-
-
-    love.graphics.setColor(255, 0, 255, 255)
-    love.graphics.rectangle('line', self.entity.x, self.entity.y, self.entity.width, self.entity.height)
-    love.graphics.setColor(255, 255, 255, 255)
+    print('idle frame: ' .. self.entity.currentAnimation.frames[1])
+    
 end

@@ -81,7 +81,18 @@ end
 
 function Player:render()
     self.x, self.y = self.x + (adjacentOffsetX or 0), self.y + (adjacentOffsetY or 0)
-    self.stateMachine:render()
+    --self.stateMachine:render()
+
+    if self.currentAnimation then
+        local anim = self.currentAnimation
+        love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
+            math.floor(self.x - self.offsetX), math.floor(self.y - self.offsetY))
+    end
+
+
+    love.graphics.setColor(255, 0, 255, 255)
+    love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
+    love.graphics.setColor(255, 255, 255, 255)
     love.graphics.setColor(1, 1, 1, 1)
-    self.x, self.y = self.x - (adjacentOffsetX or 0), self.y - (adjacentOffsetY or 0)Entity.render(self)
+
 end

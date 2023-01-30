@@ -29,7 +29,6 @@ function StateMachine:change(stateName, enterParams)
 end
 
 function StateMachine:update(dt)
-	if self.current.entity then print(self.current.entity.direction) end
 	self.current:update(dt)
 end
 
