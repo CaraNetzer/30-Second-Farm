@@ -6,7 +6,7 @@
     cogden@cs50.harvard.edu
 ]]
 
-Player = Class{__includes = Entity}
+Player = Class{}
 
 function Player:init(def)
     -- in top-down games, there are four directions instead of two
@@ -54,21 +54,14 @@ function Player:createAnimations(animations)
     return animationsReturned
 end
 
-function Player:changeState(name, p)
-    self.stateMachine:change(name, p)
-end
-
 function Player:changeAnimation(name)
     self.currentAnimation = self.animations[name]
 end
 
 function Player:update(dt)
-    self.stateMachine:update(dt)
 
-    print('here player update')
     if self.currentAnimation then
         self.currentAnimation:update(dt)
-        print(self.currentAnimation.frames[1])
     end
 end
 
@@ -80,19 +73,5 @@ function Player:collides(target)
 end
 
 function Player:render()
-    self.x, self.y = self.x + (adjacentOffsetX or 0), self.y + (adjacentOffsetY or 0)
-    --self.stateMachine:render()
-
-    if self.currentAnimation then
-        local anim = self.currentAnimation
-        love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-            math.floor(self.x - self.offsetX), math.floor(self.y - self.offsetY))
-    end
-
-
-    love.graphics.setColor(255, 0, 255, 255)
-    love.graphics.rectangle('line', self.x, self.y, self.width, self.height)
-    love.graphics.setColor(255, 255, 255, 255)
-    love.graphics.setColor(1, 1, 1, 1)
-
+    self.x, self.y = self.x + (adjacentOffsetX or 0), self.y + (adjacentOffsetY or 0) 
 end
