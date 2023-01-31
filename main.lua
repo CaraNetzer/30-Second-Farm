@@ -35,7 +35,8 @@ function love.load()
 
     love.keyboard.keysPressed = {}
 
-    gCamera = Camera(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2)
+    --gCamera = Camera(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2)
+    --gCamera = Camera()
 end
 
 function love.resize(w, h)
@@ -59,9 +60,12 @@ end
 
 function love.draw()
     
+    camera:set()
 
-    push:start()
-    gStateMachine:render()
-    push:finish()
-    
+        push:start()
+            gStateMachine:render()
+        push:finish()
+        
+    camera:unset()
+
 end

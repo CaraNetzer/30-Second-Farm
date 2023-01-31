@@ -21,7 +21,7 @@ function PlayState:init()
 
     self.farm = Farm {
         player = self.player,
-        size = 30 --30x30 tiles 
+        size = 200 --tile width and height
     }
 
     self.player.currentAnimation = self.player.animations['idle-down']
@@ -29,9 +29,37 @@ function PlayState:init()
 end
 
 function PlayState:update(dt)
+
+
+    --manage camera movement    
+    camera.x = self.player.x - VIRTUAL_WIDTH/2
+    camera.y = self.player.y - VIRTUAL_HEIGHT/2
+
+    local mapWidth = (self.farm.size*TILE_SIZE*1.5)
+    local mapHeight = (self.farm.size*TILE_SIZE)
+    
+    if self.player.x < VIRTUAL_WIDTH/2 then
+        camera.x = 0
+    end
+    if self.player.y < VIRTUAL_HEIGHT/2 then
+        camera.y = 0    
+    end
+    if camera.x > mapWidth - mapWidth/2 then
+        camera.x = mapWidth - mapWidth/2
+    end
+    if camera.y > mapHeight - mapHeight/2 then
+        camera.y = mapHeight - mapHeight/2    
+    end
+    
+
+
+
+
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
+
+    
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gStateMachine:change('start')
@@ -39,8 +67,8 @@ function PlayState:update(dt)
 
     self.player:update(dt)
 
-    local dx,dy = self.player.x - gCamera.x, self.player.y - gCamera.y
-    gCamera:move(dx/2, dy/2)
+    --local dx,dy = self.player.x - gCamera.x, self.player.y - gCamera.y
+    --gCamera:move(dx/2, dy/2)
 
     if love.keyboard.isDown('left') then
         self.player.direction = 'left'
@@ -72,6 +100,9 @@ function PlayState:render()
     love.graphics.setColor(0, 1, 153/255, 1)
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     
+    love.graphics.setColor(1,1,1, 1)
+    love.graphics.rectangle("fill", 0, 0, 30, 30)
+    
     --love.graphics.setFont(gFonts['zelda'])
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.printf('Play State', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
@@ -79,7 +110,7 @@ function PlayState:render()
 
     self.farm:render()
     
-    --gCamera:attach()
+    
 
     if self.player.currentAnimation then
         local anim = self.player.currentAnimation
@@ -90,6 +121,4 @@ function PlayState:render()
     --love.graphics.setColor(255, 0, 255, 255)
     --love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
 
-    --gCamera:detach()
-    
 end
