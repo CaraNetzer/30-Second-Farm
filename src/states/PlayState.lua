@@ -35,31 +35,34 @@ end
 
 function PlayState:growPlants(plant, dt)
     if self.waitDuration == 0 then
-        self.waitDuration = math.random(5)
+        self.waitDuration = math.random(10)
     else
         self.waitTimer = self.waitTimer + dt
 
         if self.waitTimer > self.waitDuration then
-            -- if timer is up, change sprite to the next sapling in the set
+            -- if timer is up, change sprite to the next sapling in the set and reset timers
             if plant.sprite < 4 then
                 plant.sprite = plant.sprite + 1
                 self.waitTimer = 0
                 self.waitDuration = 0
-                print('ai less than 5: ' .. plant.sprite)
             else -- if we're on the last sapling in the set and the timer is up, change to the plant and stay there
-                print('ai: ' .. plant.sprite)
                 plant.sprite = 6
             end                
         end
     end
 end
 
-function PlayState:checkPlantOverlap(plants)
-    --for each plant 
-        --check collisions
-        --if a collision occurs
-            --remove plant from plants
-            --play error sound
+--change this to a grid system
+function PlayState:checkPlantOverlap(plants, newPlant)
+    for i, plant in pairs(plants) do
+        --collision conditional
+        if (newPlant.x + 25 < plant.x or newPlant.x > plant.x + 25 or
+                newPlant.y + 25 < plant.y or newPlant.y > plant.y + 25) then
+            table.remove(plants) 
+            gSounds['plant-blocked']:stop()
+            gSounds['plant-blocked']:play()
+        end
+    end
 end
 
 function PlayState:update(dt)
@@ -95,24 +98,30 @@ function PlayState:update(dt)
     --plant random seed based on player direction
     if love.keyboard.wasPressed('p') then
         local plant = {
-            set = math.random(1,9),
-            sprite = 1,
-            x = self.player.x + 16,
-            y = self.player.y
+            set = math.random(1,8),
+            sprite = 1
         }
 
         if self.player.direction == 'right' then
+            plant.x = self.player.x + 16
+            plant.y = self.player.y
             table.insert(self.plants, plant)
-            --checkPlantOverlap(self.plants)
+            self:checkPlantOverlap(self.plants, plant)
         elseif self.player.direction == 'left' then
+            plant.x = self.player.x - 25
+            plant.y = self.player.y
             table.insert(self.plants, plant)
-            --checkPlantOverlap(self.plants)
+            self:checkPlantOverlap(self.plants, plant)
         elseif self.player.direction == 'down' then
+            plant.x = self.player.x - 5
+            plant.y = self.player.y + 16
             table.insert(self.plants, plant)
-            --checkPlantOverlap(self.plants)
+            self:checkPlantOverlap(self.plants, plant)
         elseif self.player.direction == 'up' then
+            plant.x = self.player.x - 5
+            plant.y = self.player.y + 25
             table.insert(self.plants, plant)
-            --checkPlantOverlap(self.plants)
+            self:checkPlantOverlap(self.plants, plant)
         end
     end
 
@@ -176,13 +185,9 @@ function PlayState:render()
     self.farm:render()
     
     for i, plant in pairs(self.plants) do
-        print('modulo: ' .. plant.sprite % 6)
-        print('sprite in render: ' .. plant.sprite)
-        if plant.sprite%6 ~= 0 then
-            print('sap: ' .. SAPLING_TILES[plant.set][plant.sprite])
+        if plant.sprite%6 ~= 0 then --if the sprite is still a sapling
             love.graphics.draw(gTextures['plants'], gFrames['plants'][SAPLING_TILES[plant.set][plant.sprite]], plant.x, plant.y)
-        else
-            print('plant: ' .. PLANT_TILES[plant.sprite * plant.set])
+        else --if the sapling has grown into a plant
             love.graphics.draw(gTextures['plants'], gFrames['plants'][PLANT_TILES[plant.sprite * plant.set]], plant.x, plant.y)
         end
     end

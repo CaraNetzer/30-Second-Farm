@@ -30,6 +30,13 @@ gFrames = {
     ['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 32),
     ['plants'] = GenerateQuads(gTextures['plants'], 25, 25)
 }
+
+
+gSounds = {
+    --['music'] = love.audio.newSource('sounds/music.mp3', 'static'),
+    ['plant-blocked'] = love.audio.newSource('graphics/CantPlant.wav', 'static')
+}
+
 --[[ 
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
@@ -41,11 +48,4 @@ gFonts = {
     ['zelda-small'] = love.graphics.newFont('fonts/zelda.otf', 32)
 }
 
-gSounds = {
-    ['music'] = love.audio.newSource('sounds/music.mp3', 'static'),
-    ['sword'] = love.audio.newSource('sounds/sword.wav', 'static'),
-    ['hit-enemy'] = love.audio.newSource('sounds/hit_enemy.wav', 'static'),
-    ['hit-player'] = love.audio.newSource('sounds/hit_player.wav', 'static'),
-    ['door'] = love.audio.newSource('sounds/door.wav', 'static'),
-    ['pickup'] = love.audio.newSource('sounds/pickup.wav', 'static'),
-} ]]
+ ]]
