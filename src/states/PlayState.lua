@@ -24,6 +24,8 @@ function PlayState:init()
         size = 200 --tile width and height
     }
 
+    self.plants = {}
+
     self.player.currentAnimation = self.player.animations['idle-down']
 
 end
@@ -59,7 +61,33 @@ function PlayState:update(dt)
         love.event.quit()
     end
 
-    
+    if love.keyboard.wasPressed('p') then
+        if self.player.direction == 'right' then
+            table.insert(self.plants, {
+                sprite = math.random(2, 35),
+                x = self.player.x + 16,
+                y = self.player.y
+            })
+        elseif self.player.direction == 'left' then
+            table.insert(self.plants, {
+                sprite = math.random(2, 35),
+                x = self.player.x - 25,
+                y = self.player.y
+            })
+        elseif self.player.direction == 'down' then
+            table.insert(self.plants, {
+                sprite = math.random(2, 35),
+                x = self.player.x - 5,
+                y = self.player.y + 16
+            })
+        elseif self.player.direction == 'up' then
+            table.insert(self.plants, {
+                sprite = math.random(2, 35),
+                x = self.player.x - 5,
+                y = self.player.y - 25
+            })
+        end
+    end
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gStateMachine:change('start')
@@ -70,27 +98,27 @@ function PlayState:update(dt)
     --local dx,dy = self.player.x - gCamera.x, self.player.y - gCamera.y
     --gCamera:move(dx/2, dy/2)
 
-    if love.keyboard.isDown('left') then
+    if love.keyboard.isDown('a') then
         self.player.direction = 'left'
         self.player:changeAnimation('walk-left')
         self.player.x = self.player.x - self.player.walkSpeed * dt  
 
-    elseif love.keyboard.isDown('right') then
+    elseif love.keyboard.isDown('d') then
         self.player.direction = 'right'
         self.player:changeAnimation('walk-right')
         self.player.x = self.player.x + self.player.walkSpeed * dt
 
-    elseif love.keyboard.isDown('up') then
+    elseif love.keyboard.isDown('w') then
         self.player.direction = 'up'
         self.player:changeAnimation('walk-up')
         self.player.y = self.player.y - self.player.walkSpeed * dt
 
-    elseif love.keyboard.isDown('down') then
+    elseif love.keyboard.isDown('s') then
         self.player.direction = 'down'
         self.player:changeAnimation('walk-down')
         self.player.y = self.player.y + self.player.walkSpeed * dt
     
-    elseif not love.keyboard.isDown('down', 'up', 'right', 'left') then
+    elseif not love.keyboard.isDown('s', 'w', 'd', 'a') then
         self.player:changeAnimation('idle-' .. self.player.direction)
     end
 end
@@ -110,13 +138,16 @@ function PlayState:render()
 
     self.farm:render()
     
-    
+    for i, plant in pairs(self.plants) do
+        love.graphics.draw(gTextures['plants'], gFrames['plants'][SAPLING_TILES[plant.sprite]], plant.x, plant.y)
+    end
 
     if self.player.currentAnimation then
         local anim = self.player.currentAnimation
         love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
             math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))
     end
+
 
     --love.graphics.setColor(255, 0, 255, 255)
     --love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)

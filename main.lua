@@ -59,13 +59,15 @@ function love.update(dt)
 end
 
 function love.draw()
+
+    love.graphics.setBackgroundColor(0, 230/255, 100/255, 1)
     
-    camera:set()
+    --camera:set()
 
         push:start()
             gStateMachine:render()
         push:finish()
         
-    camera:unset()
+    --camera:unset()
 
 end
