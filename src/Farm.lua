@@ -12,7 +12,7 @@ function Farm:init(def)
     for i = 1, 15, 1 do
         self.grid[i] = {}
         for j = 1, 8, 1 do
-            table.insert(self.grid[i], {id = "empty"})
+            table.insert(self.grid[i], {id = "empty", x = X_OFFSET + (i*25), y = Y_OFFSET + j*25})
         end
     end
 end

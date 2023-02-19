@@ -52,29 +52,15 @@ function PlayState:growPlants(plant, dt)
     end
 end
 
---change this to a grid system
-function PlayState:checkPlantOverlap(grid, newPlant)
-    for i, tile in pairs(grid) do
-        --is there a plant already assigned to this tile
-        --if grid[]
-        if (newPlant.x + 25 < plant.x or newPlant.x > plant.x + 25 or
-                newPlant.y + 25 < plant.y or newPlant.y > plant.y + 25) then
-            table.remove(plants) 
-            gSounds['plant-blocked']:stop()
-            gSounds['plant-blocked']:play()
-        end
-    end
-end
-
 function PlayState:update(dt)
 
 
     --manage camera movement    
-    camera.x = self.player.x - VIRTUAL_WIDTH/2
-    camera.y = self.player.y - VIRTUAL_HEIGHT/2
+    -- camera.x = self.player.x - VIRTUAL_WIDTH/2
+    -- camera.y = self.player.y - VIRTUAL_HEIGHT/2
 
-    local mapWidth = (self.farm.size*TILE_SIZE*1.5)
-    local mapHeight = (self.farm.size*TILE_SIZE)
+    -- local mapWidth = (self.farm.size*TILE_SIZE*1.5)
+    -- local mapHeight = (self.farm.size*TILE_SIZE)
     
     --camera movement
     -- if self.player.x < VIRTUAL_WIDTH/2 then
@@ -98,36 +84,91 @@ function PlayState:update(dt)
 
     --plant random seed based on player direction
     if love.keyboard.wasPressed('p') then
+        local gridX = self.player.mapX + 1
+        local gridY = self.player.mapY + 1
         local plant = {
             set = math.random(1,8),
-            sprite = 1
+            sprite = 1,
+            x = gridX,
+            y = gridY
         }
 
         if self.player.direction == 'right' then
-            plant.x = self.player.mapX + 1
-            plant.y = self.player.mapY + 1
-            if self.farm.grid[self.player.mapX][self.player.mapY].id  == "empty" then
-                print(self.player.mapY)
-                table.insert(self.farm.grid[self.player.mapX][self.player.mapY], plant)
-                self.farm.grid[self.player.mapX][self.player.mapY].id = "plant"
+            gridY = gridY - 2
+            gridX = gridX - 1
+            if self.farm.grid[gridX][gridY].id  == "empty" then
+                
+                self.farm.grid[gridX][gridY].set = plant.set
+                self.farm.grid[gridX][gridY].sprite = plant.sprite
+
+                
+                self.farm.grid[gridX][gridY].id = "plant"
+
+                --for rendering at actual pixel position
+                plant.x = (gridX * 25) + 4.5
+                plant.y = (gridY * 25) + 8
                 table.insert(self.plants, plant)
+            else
+                gSounds['plant-blocked']:stop()
+                gSounds['plant-blocked']:play()
             end
-            --self:checkPlantOverlap(self.farm.grid, plant)
         elseif self.player.direction == 'left' then
-            plant.x = self.player.mapX + 1
-            plant.y = self.player.mapY + 1
-            table.insert(self.plants, plant)
-            --self:checkPlantOverlap(self.plants, plant)
+            gridY = gridY - 2
+            gridX = gridX - 3
+            if self.farm.grid[gridX][gridY].id  == "empty" then
+                
+                self.farm.grid[gridX][gridY].set = plant.set
+                self.farm.grid[gridX][gridY].sprite = plant.sprite
+
+                
+                self.farm.grid[gridX][gridY].id = "plant"
+
+                --for rendering at actual pixel position
+                plant.x = (gridX * 25) + 4.5
+                plant.y = (gridY * 25) + 8
+                table.insert(self.plants, plant)
+            else
+                gSounds['plant-blocked']:stop()
+                gSounds['plant-blocked']:play()
+            end
         elseif self.player.direction == 'down' then
-            plant.x = self.player.mapX + 1
-            plant.y = self.player.mapY + 1
-            table.insert(self.plants, plant)
-            --self:checkPlantOverlap(self.plants, plant)
+            gridY = gridY - 2
+            gridX = gridX - 2
+            if self.farm.grid[gridX][gridY].id  == "empty" then
+                
+                self.farm.grid[gridX][gridY].set = plant.set
+                self.farm.grid[gridX][gridY].sprite = plant.sprite
+
+                
+                self.farm.grid[gridX][gridY].id = "plant"
+
+                --for rendering at actual pixel position
+                plant.x = (gridX * 25) + 4.5
+                plant.y = (gridY * 25) + 8
+                table.insert(self.plants, plant)
+            else
+                gSounds['plant-blocked']:stop()
+                gSounds['plant-blocked']:play()
+            end
         elseif self.player.direction == 'up' then
-            plant.x = self.player.mapX + 1
-            plant.y = self.player.mapY + 1
-            table.insert(self.plants, plant)
-            --self:checkPlantOverlap(self.plants, plant)
+            gridY = gridY - 3
+            gridX = gridX - 2   
+            if self.farm.grid[gridX][gridY].id  == "empty" then
+                
+                self.farm.grid[gridX][gridY].set = plant.set
+                self.farm.grid[gridX][gridY].sprite = plant.sprite
+
+                
+                self.farm.grid[gridX][gridY].id = "plant"
+
+                --for rendering at actual pixel position
+                plant.x = (gridX * 25) + 4.5
+                plant.y = (gridY * 25) + 8
+                table.insert(self.plants, plant)
+            else
+                gSounds['plant-blocked']:stop()
+                gSounds['plant-blocked']:play()
+            end
         end
     end
 
