@@ -19,6 +19,8 @@ function Player:init(def)
     self.y = def.y
     self.width = def.width
     self.height = def.height
+    self.mapX = math.ceil((self.x+X_OFFSET)/25)
+    self.mapY = math.ceil((self.y+Y_OFFSET)/25)
 
     -- drawing offsets for padded sprites
     self.offsetX = def.offsetX or 0
@@ -63,6 +65,9 @@ function Player:update(dt)
     if self.currentAnimation then
         self.currentAnimation:update(dt)
     end
+
+    self.mapX = math.ceil((self.x+X_OFFSET)/25)
+    self.mapY = math.ceil((self.y+Y_OFFSET)/25)
 end
 
 function Player:collides(target)

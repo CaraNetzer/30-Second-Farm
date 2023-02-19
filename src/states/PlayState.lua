@@ -53,9 +53,10 @@ function PlayState:growPlants(plant, dt)
 end
 
 --change this to a grid system
-function PlayState:checkPlantOverlap(plants, newPlant)
-    for i, plant in pairs(plants) do
-        --collision conditional
+function PlayState:checkPlantOverlap(grid, newPlant)
+    for i, tile in pairs(grid) do
+        --is there a plant already assigned to this tile
+        --if grid[]
         if (newPlant.x + 25 < plant.x or newPlant.x > plant.x + 25 or
                 newPlant.y + 25 < plant.y or newPlant.y > plant.y + 25) then
             table.remove(plants) 
@@ -103,25 +104,30 @@ function PlayState:update(dt)
         }
 
         if self.player.direction == 'right' then
-            plant.x = self.player.x + 16
-            plant.y = self.player.y
-            table.insert(self.plants, plant)
-            self:checkPlantOverlap(self.plants, plant)
+            plant.x = self.player.mapX + 1
+            plant.y = self.player.mapY + 1
+            if self.farm.grid[self.player.mapX][self.player.mapY].id  == "empty" then
+                print(self.player.mapY)
+                table.insert(self.farm.grid[self.player.mapX][self.player.mapY], plant)
+                self.farm.grid[self.player.mapX][self.player.mapY].id = "plant"
+                table.insert(self.plants, plant)
+            end
+            --self:checkPlantOverlap(self.farm.grid, plant)
         elseif self.player.direction == 'left' then
-            plant.x = self.player.x - 25
-            plant.y = self.player.y
+            plant.x = self.player.mapX + 1
+            plant.y = self.player.mapY + 1
             table.insert(self.plants, plant)
-            self:checkPlantOverlap(self.plants, plant)
+            --self:checkPlantOverlap(self.plants, plant)
         elseif self.player.direction == 'down' then
-            plant.x = self.player.x - 5
-            plant.y = self.player.y + 16
+            plant.x = self.player.mapX + 1
+            plant.y = self.player.mapY + 1
             table.insert(self.plants, plant)
-            self:checkPlantOverlap(self.plants, plant)
+            --self:checkPlantOverlap(self.plants, plant)
         elseif self.player.direction == 'up' then
-            plant.x = self.player.x - 5
-            plant.y = self.player.y + 25
+            plant.x = self.player.mapX + 1
+            plant.y = self.player.mapY + 1
             table.insert(self.plants, plant)
-            self:checkPlantOverlap(self.plants, plant)
+            --self:checkPlantOverlap(self.plants, plant)
         end
     end
 
@@ -171,15 +177,15 @@ end
 
 function PlayState:render()  
     
-    love.graphics.setColor(0, 1, 153/255, 1)
-    love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    -- love.graphics.setColor(0, 1, 153/255, 1)
+    -- love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     
-    love.graphics.setColor(1,1,1, 1)
-    love.graphics.rectangle("fill", 0, 0, 30, 30)
+    -- love.graphics.setColor(1,1,1, 1)
+    -- love.graphics.rectangle("fill", 0, 0, 30, 30)
     
-    --love.graphics.setFont(gFonts['zelda'])
-    love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf('Play State', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
+    -- --love.graphics.setFont(gFonts['zelda'])
+    -- love.graphics.setColor(1, 1, 1, 1)
+    -- love.graphics.printf('Play State', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
 
 
     self.farm:render()

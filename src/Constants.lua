@@ -8,6 +8,10 @@ WINDOW_HEIGHT = 720
 
 TILE_SIZE = 16
 
+PLANT_SIZE = 25
+X_OFFSET = 4.5
+Y_OFFSET = 8
+
 --
 -- entity constants
 --
