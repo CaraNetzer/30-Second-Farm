@@ -68,6 +68,17 @@ function Player:update(dt)
 
     self.mapX = math.ceil((self.x+X_OFFSET)/25)
     self.mapY = math.ceil((self.y+Y_OFFSET)/25)
+
+    --dont let player move off screen
+    if self.x > VIRTUAL_WIDTH - self.width then
+        self.x = VIRTUAL_WIDTH - self.width
+    elseif self.x < 0 then
+        self.x = 0
+    elseif self.y > VIRTUAL_HEIGHT - self.height then
+        self.y = VIRTUAL_HEIGHT - self.height
+    elseif self.y < 0  then
+        self.y = 0
+    end
 end
 
 function Player:collides(target)

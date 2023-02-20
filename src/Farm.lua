@@ -12,7 +12,7 @@ function Farm:init(def)
     for i = 1, 15, 1 do
         self.grid[i] = {}
         for j = 1, 8, 1 do
-            table.insert(self.grid[i], {id = "empty", x = X_OFFSET + (i*25), y = Y_OFFSET + j*25})
+            table.insert(self.grid[i], {id = "empty", x = X_OFFSET + (i*PLANT_SIZE), y = Y_OFFSET + j*PLANT_SIZE})
         end
     end
 end
@@ -22,6 +22,6 @@ function Farm:update(dt)
 end
 
 function Farm:render()
-    -- love.graphics.setColor(0, 230/255, 100/255, 1)
-    -- love.graphics.rectangle("fill", 0, 0, TILE_SIZE*self.size*1.5, TILE_SIZE*self.size)
+    --love.graphics.setColor(0, 230/255, 100/255, 1)
+    --love.graphics.rectangle("fill", 0, 0, TILE_SIZE*self.size*1.5, TILE_SIZE*self.size)
 end

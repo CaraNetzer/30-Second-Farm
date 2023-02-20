@@ -105,8 +105,8 @@ function PlayState:update(dt)
                 self.farm.grid[gridX][gridY].id = "plant"
 
                 --for rendering at actual pixel position
-                plant.x = (gridX * 25) + 4.5
-                plant.y = (gridY * 25) + 8
+                plant.x = (gridX * PLANT_SIZE) + X_OFFSET
+                plant.y = (gridY * PLANT_SIZE) + Y_OFFSET
                 table.insert(self.plants, plant)
             else
                 gSounds['plant-blocked']:stop()
@@ -124,8 +124,8 @@ function PlayState:update(dt)
                 self.farm.grid[gridX][gridY].id = "plant"
 
                 --for rendering at actual pixel position
-                plant.x = (gridX * 25) + 4.5
-                plant.y = (gridY * 25) + 8
+                plant.x = (gridX * PLANT_SIZE) + X_OFFSET
+                plant.y = (gridY * PLANT_SIZE) + Y_OFFSET
                 table.insert(self.plants, plant)
             else
                 gSounds['plant-blocked']:stop()
@@ -143,8 +143,8 @@ function PlayState:update(dt)
                 self.farm.grid[gridX][gridY].id = "plant"
 
                 --for rendering at actual pixel position
-                plant.x = (gridX * 25) + 4.5
-                plant.y = (gridY * 25) + 8
+                plant.x = (gridX * PLANT_SIZE) + X_OFFSET
+                plant.y = (gridY * PLANT_SIZE) + Y_OFFSET
                 table.insert(self.plants, plant)
             else
                 gSounds['plant-blocked']:stop()
@@ -162,8 +162,8 @@ function PlayState:update(dt)
                 self.farm.grid[gridX][gridY].id = "plant"
 
                 --for rendering at actual pixel position
-                plant.x = (gridX * 25) + 4.5
-                plant.y = (gridY * 25) + 8
+                plant.x = (gridX * PLANT_SIZE) + X_OFFSET
+                plant.y = (gridY * PLANT_SIZE) + Y_OFFSET
                 table.insert(self.plants, plant)
             else
                 gSounds['plant-blocked']:stop()
@@ -218,15 +218,15 @@ end
 
 function PlayState:render()  
     
-    -- love.graphics.setColor(0, 1, 153/255, 1)
-    -- love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    love.graphics.setColor(0, 1, 153/255, 1)
+    love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     
-    -- love.graphics.setColor(1,1,1, 1)
-    -- love.graphics.rectangle("fill", 0, 0, 30, 30)
+    love.graphics.setColor(1,1,1, 1)
+    --love.graphics.rectangle("fill", 0, 0, 30, 30)
     
     -- --love.graphics.setFont(gFonts['zelda'])
-    -- love.graphics.setColor(1, 1, 1, 1)
-    -- love.graphics.printf('Play State', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
+    love.graphics.setColor(1, 1, 1, 1)
+    --love.graphics.printf('Play State', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
 
 
     self.farm:render()
