@@ -23,12 +23,16 @@ require 'src/Farm'
 
 gTextures = {
     ['character-walk'] = love.graphics.newImage('graphics/character_walk.png'),
-    ['plants'] = love.graphics.newImage('graphics/plant-sprites.png')
+    ['plants'] = love.graphics.newImage('graphics/plant-sprites.png'),
+    ['backpack'] = love.graphics.newImage('graphics/backpack.png'),
+    ['chest'] = love.graphics.newImage('graphics/better-chest.png'),
+    ['house'] = love.graphics.newImage('graphics/house.png')
 }
 
 gFrames = {
     ['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 32),
-    ['plants'] = GenerateQuads(gTextures['plants'], 25, 25)
+    ['plants'] = GenerateQuads(gTextures['plants'], 25, 25),
+    ['backpack'] = GenerateQuads(gTextures['backpack'], 25, 25),
 }
 
 

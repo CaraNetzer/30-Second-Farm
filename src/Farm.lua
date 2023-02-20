@@ -22,6 +22,13 @@ function Farm:update(dt)
 end
 
 function Farm:render()
-    --love.graphics.setColor(0, 230/255, 100/255, 1)
-    --love.graphics.rectangle("fill", 0, 0, TILE_SIZE*self.size*1.5, TILE_SIZE*self.size)
+    love.graphics.setColor(0, 1, 153/255, 1)
+    love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    
+    --reset color to white    
+    love.graphics.setColor(1,1,1,1)
+
+    love.graphics.draw(gTextures['house'], 10, 5, 0, .75, .75)
+    love.graphics.draw(gTextures['chest'], VIRTUAL_WIDTH - 25, VIRTUAL_HEIGHT/2, 0, .25, .25)
+       
 end

@@ -218,15 +218,8 @@ end
 
 function PlayState:render()  
     
-    love.graphics.setColor(0, 1, 153/255, 1)
-    love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
     
-    love.graphics.setColor(1,1,1, 1)
-    --love.graphics.rectangle("fill", 0, 0, 30, 30)
     
-    -- --love.graphics.setFont(gFonts['zelda'])
-    love.graphics.setColor(1, 1, 1, 1)
-    --love.graphics.printf('Play State', 2, VIRTUAL_HEIGHT / 2 - 30, VIRTUAL_WIDTH, 'center')
 
 
     self.farm:render()
