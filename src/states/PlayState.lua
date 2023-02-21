@@ -31,6 +31,8 @@ function PlayState:init()
     self.waitDuration = 0
     self.waitTimer = 0
 
+    self.backpack = {}
+
 end
 
 function PlayState:growPlants(plant, dt)
@@ -53,29 +55,8 @@ function PlayState:growPlants(plant, dt)
 end
 
 function PlayState:update(dt)
-
-
-    --manage camera movement    
-    -- camera.x = self.player.x - VIRTUAL_WIDTH/2
-    -- camera.y = self.player.y - VIRTUAL_HEIGHT/2
-
-    -- local mapWidth = (self.farm.size*TILE_SIZE*1.5)
-    -- local mapHeight = (self.farm.size*TILE_SIZE)
     
-    --camera movement
-    -- if self.player.x < VIRTUAL_WIDTH/2 then
-    --     camera.x = 0
-    -- end
-    -- if self.player.y < VIRTUAL_HEIGHT/2 then
-    --     camera.y = 0    
-    -- end
-    -- if camera.x > mapWidth - mapWidth/2 then
-    --     camera.x = mapWidth - mapWidth/2
-    -- end
-    -- if camera.y > mapHeight - mapHeight/2 then
-    --     camera.y = mapHeight - mapHeight/2    
-    -- end
-    
+    self.farm:update()
 
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
@@ -188,8 +169,6 @@ function PlayState:update(dt)
 
     self.player:update(dt)
 
-    --local dx,dy = self.player.x - gCamera.x, self.player.y - gCamera.y
-    --gCamera:move(dx/2, dy/2)
 
     if love.keyboard.isDown('a') then
         self.player.direction = 'left'
@@ -218,10 +197,6 @@ end
 
 function PlayState:render()  
     
-    
-    
-
-
     self.farm:render()
     
     for i, plant in pairs(self.plants) do

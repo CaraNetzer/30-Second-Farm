@@ -71,6 +71,16 @@ function Farm:update(dt)
 
     --moles
 
+    --player collisions
+    local fenceIds = {73, 74, 75, 81, 83, 89, 90, 91}
+    for t, tile in pairs(self.grass) do
+        for f, fence in pairs(fenceIds) do
+            if tile.tileId == fence and self.player.x + 16 > tile.x*16 and self.player.x < (tile.x*16)+16 then
+                self.player.x = (tile.x*16) - 16
+            end
+            --
+        end
+    end
 
 end
 
