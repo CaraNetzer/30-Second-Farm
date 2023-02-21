@@ -5,6 +5,7 @@ function Farm:init(def)
     self.player = def.player
     self.size = def.size
     self.grid = {}
+    self.grass = {}
 
     --VIRTUAL_WIDTH = 384 - 9 = 375 (15 tiles wide)
     --VIRTUAL_HEIGHT = 216 - 16 = 200 (8 tiles tall)
@@ -15,19 +16,78 @@ function Farm:init(def)
             table.insert(self.grid[i], {id = "empty", x = X_OFFSET + (i*PLANT_SIZE), y = Y_OFFSET + j*PLANT_SIZE})
         end
     end
+
+    --ground tiles
+    for y = 1, 14 do
+        self.grass[y] = {}
+        for x = 1, 24 do
+            if y > 3 and y < 12 and x > 10 and x < 21 then --middle dirt
+                table.insert(self.grass[y], {x = x, y = y, tileId = 45})
+            elseif x == 21 and y == 5 then --right gate
+                table.insert(self.grass[y], {x = x, y = y, tileId = 63})
+                --table.insert(self.grass[y], {x = x, y = y, tileId = 91})
+            elseif x == 10 and y == 10 then --left gate
+                table.insert(self.grass[y], {x = x, y = y, tileId = 61})
+                --table.insert(self.grass[y], {x = x, y = y, tileId = 91})
+
+
+            elseif y == 3 and x > 10 and x < 21 then --top edge and fence
+                table.insert(self.grass[y], {x = x, y = y, tileId = 54})
+                table.insert(self.grass[y], {x = x, y = y, tileId = 74})
+
+            elseif y == 12 and x > 10 and x < 21 then --bottom edge and fence
+                table.insert(self.grass[y], {x = x, y = y, tileId = 70})
+                table.insert(self.grass[y], {x = x, y = y, tileId = 74})
+
+            elseif x == 10 and y > 3 and y < 12 then --left edge and fence
+                table.insert(self.grass[y], {x = x, y = y, tileId = 61})
+                table.insert(self.grass[y], {x = x, y = y, tileId = 81})
+                
+            elseif x == 21 and y > 3 and y < 12 then --right edge and fence
+                table.insert(self.grass[y], {x = x, y = y, tileId = 63})
+                table.insert(self.grass[y], {x = x, y = y, tileId = 83})
+                
+            elseif x == 10 and y == 3 then --top left corner
+                table.insert(self.grass[y], {x = x, y = y, tileId = math.random(2) == 1 and 46 or 47})
+                table.insert(self.grass[y], {x = x, y = y, tileId = 73})
+            elseif x == 21 and y == 3 then --top right corner
+                table.insert(self.grass[y], {x = x, y = y, tileId = math.random(2) == 1 and 46 or 47})
+                table.insert(self.grass[y], {x = x, y = y, tileId = 75})
+            elseif x == 10 and y == 12 then --bottom left corner
+                table.insert(self.grass[y], {x = x, y = y, tileId = math.random(2) == 1 and 46 or 47})
+                table.insert(self.grass[y], {x = x, y = y, tileId = 89})
+            elseif x == 21 and y == 12 then --bottom right corner
+                table.insert(self.grass[y], {x = x, y = y, tileId = math.random(2) == 1 and 46 or 47})
+                table.insert(self.grass[y], {x = x, y = y, tileId = 91})
+            
+            else --grass
+                table.insert(self.grass[y], {x = x, y = y, tileId = math.random(2) == 1 and 46 or 47})
+            end
+        end
+    end
 end
 
 function Farm:update(dt)
 
+    --moles
+
+
 end
 
 function Farm:render()
-    love.graphics.setColor(0, 1, 153/255, 1)
-    love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
+    
     
     --reset color to white    
     love.graphics.setColor(1,1,1,1)
 
+    --ground and fence tiles / grass table
+    for i, grassSet in pairs(self.grass) do
+        for j, grassTile in pairs(grassSet) do
+            love.graphics.draw(gTextures['grass'], gFrames['grass'][grassTile.tileId], (grassTile.x - 1) * TILE_SIZE, (grassTile.y - 1) * TILE_SIZE)
+        end
+    end
+
+    --house and chest
     love.graphics.draw(gTextures['house'], 10, 5, 0, .75, .75)
     love.graphics.draw(gTextures['chest'], VIRTUAL_WIDTH - 25, VIRTUAL_HEIGHT/2, 0, .25, .25)
        

@@ -26,13 +26,15 @@ gTextures = {
     ['plants'] = love.graphics.newImage('graphics/plant-sprites.png'),
     ['backpack'] = love.graphics.newImage('graphics/backpack.png'),
     ['chest'] = love.graphics.newImage('graphics/better-chest.png'),
-    ['house'] = love.graphics.newImage('graphics/house.png')
+    ['house'] = love.graphics.newImage('graphics/house.png'),
+    ['grass'] = love.graphics.newImage('graphics/grass.png')
 }
 
 gFrames = {
     ['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 32),
     ['plants'] = GenerateQuads(gTextures['plants'], 25, 25),
     ['backpack'] = GenerateQuads(gTextures['backpack'], 25, 25),
+    ['grass'] = GenerateQuads(gTextures['grass'], 16, 16)
 }
 
 
