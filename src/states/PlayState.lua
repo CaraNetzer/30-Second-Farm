@@ -71,7 +71,9 @@ function PlayState:update(dt)
             set = math.random(1,8),
             sprite = 1,
             x = gridX,
-            y = gridY
+            y = gridY,
+            width = PLANT_SIZE - 5, -- minus 5 is for collision wiggle room
+            height = PLANT_SIZE - 5
         }
 
         if self.player.direction == 'right' then
@@ -153,9 +155,25 @@ function PlayState:update(dt)
         end
     end
 
-    --ai grow seeds
+    --grow seeds
     for i, plant in pairs(self.plants) do
         self:growPlants(plant, dt)
+    end
+   
+    --collect plants
+    for i, plant in pairs(self.plants) do
+        if plant.sprite == 6 then --if plant is fully grown
+            if self.player:collides(plant) then 
+                --when player collides with a fully grown plant add it to backpack and remove it from plants table
+                table.insert(self.backpack, plant)
+                table.remove(self.plants, i)
+
+                gSounds['plant-collected']:stop()
+                gSounds['plant-collected']:play()
+
+                --print(#self.backpack)
+            end
+        end
     end
 
     --allow player to pick up fully grown plants

@@ -40,7 +40,8 @@ gFrames = {
 
 gSounds = {
     --['music'] = love.audio.newSource('sounds/music.mp3', 'static'),
-    ['plant-blocked'] = love.audio.newSource('graphics/CantPlant.wav', 'static')
+    ['plant-blocked'] = love.audio.newSource('graphics/CantPlant.wav', 'static'),
+    ['plant-collected'] = love.audio.newSource('graphics/plant-collected.wav', 'static')
 }
 
 --[[ 
