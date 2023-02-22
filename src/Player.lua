@@ -112,6 +112,21 @@ function Player:update(dt)
             self.y = (10*TILE_SIZE)
         end
     end
+
+    --chest collisions
+    --position after scaling: x: VIRTUAL_WIDTH - 22, y: VIRTUAL_HEIGHT/2 + 4
+    if self.x > VIRTUAL_WIDTH - 22 - self.width and self.x < VIRTUAL_WIDTH 
+        and self.y > VIRTUAL_HEIGHT/2 + 4 - self.height and self.y < (VIRTUAL_HEIGHT/2) + 4 + CHEST_HEIGHT - 10 then 
+            if self.direction == 'right' then
+                self.x = VIRTUAL_WIDTH - 22 - self.width
+            elseif self.direction == 'up' then
+                self.y = (VIRTUAL_HEIGHT/2) + 4 + CHEST_HEIGHT - 10
+            elseif self.direction == 'down' then
+                self.y = VIRTUAL_HEIGHT/2 + 4 - self.height
+            end
+    end
+
+
 end
 
 function Player:collides(target)

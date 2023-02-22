@@ -12,6 +12,9 @@ PLANT_SIZE = 25
 X_OFFSET = 4.5
 Y_OFFSET = 8
 
+CHEST_WIDTH = 72*.25
+CHEST_HEIGHT = 72*.25
+
 --
 -- entity constants
 --
