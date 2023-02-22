@@ -79,6 +79,39 @@ function Player:update(dt)
     elseif self.y < 0  then
         self.y = 0
     end
+
+    --fence collisions
+    --left
+    if self.x > (8*TILE_SIZE) and self.x < (9*TILE_SIZE) + 6 and ((self.y > (1*TILE_SIZE) and self.y < (8*TILE_SIZE))
+    or (self.y > (9*TILE_SIZE) and self.y < (11*TILE_SIZE))) then
+        if self.direction == 'right' then
+            self.x = (8*TILE_SIZE)
+        elseif self.direction == 'left' then
+            self.x = (9*TILE_SIZE) + 6
+        end
+    --right
+    elseif self.x > (20*TILE_SIZE) - 6 and self.x < (21*TILE_SIZE) and ((self.y > (1*TILE_SIZE) and self.y < (3*TILE_SIZE))
+        or (self.y > (4*TILE_SIZE) and self.y < (11*TILE_SIZE))) then
+        if self.direction == 'right' then
+            self.x = (20*TILE_SIZE) - 6
+        elseif self.direction == 'left' then
+            self.x = (21*TILE_SIZE)
+        end
+    --top
+    elseif self.x > (9*TILE_SIZE) and self.x < (21*TILE_SIZE) and self.y > (1*TILE_SIZE) and self.y < (2*TILE_SIZE) then
+        if self.direction == 'up' then
+            self.y = (2*TILE_SIZE)
+        elseif self.direction == 'down' then
+            self.y = (1*TILE_SIZE)
+        end
+    --bottom
+    elseif self.x > (9*TILE_SIZE) and self.x < (21*TILE_SIZE) and self.y > (10*TILE_SIZE) and self.y < (11*TILE_SIZE) then
+        if self.direction == 'up' then
+            self.y = (11*TILE_SIZE)
+        elseif self.direction == 'down' then
+            self.y = (10*TILE_SIZE)
+        end
+    end
 end
 
 function Player:collides(target)

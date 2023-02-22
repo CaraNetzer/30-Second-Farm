@@ -78,7 +78,7 @@ function Farm:update(dt)
             if tile.tileId == fence and self.player.x + 16 > tile.x*16 and self.player.x < (tile.x*16)+16 then
                 self.player.x = (tile.x*16) - 16
             end
-            --
+            --try doing it based on x and y values maybe instead of tileIds
         end
     end
 
