@@ -15,6 +15,9 @@ Y_OFFSET = 8
 CHEST_WIDTH = 72*.25
 CHEST_HEIGHT = 72*.25
 
+MOLE_WIDTH = 29
+MOLE_HEIGHT = 21
+
 --
 -- entity constants
 --

@@ -45,3 +45,18 @@ function GenerateHouseQuads(atlas, tilewidth, tileheight)
 
     return spritesheet
 end
+
+function GenerateMoleQuads(atlas, tilewidth, tileheight)
+    local sheetWidth = atlas:getWidth() / tilewidth
+    local sheetHeight = atlas:getHeight() / tileheight
+
+    local spritesheet = {}
+
+    spritesheet[1] = love.graphics.newQuad(0, 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
+    spritesheet[2] = love.graphics.newQuad(MOLE_WIDTH + 6, 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
+    spritesheet[3] = love.graphics.newQuad((MOLE_WIDTH*2) + 8, 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
+    spritesheet[4] = love.graphics.newQuad((MOLE_WIDTH*3) + 8, 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
+    spritesheet[5] = love.graphics.newQuad((MOLE_WIDTH*3) + 8, 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
+    
+    return spritesheet
+end

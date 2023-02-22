@@ -19,6 +19,12 @@ function PlayState:init()
         offsetY = 5
     }
 
+    self.mole = Mole {
+        x = 200,
+        y = 90,
+        animations = ENTITY_DEFS['moles'].animations
+    }
+
     self.farm = Farm {
         player = self.player,
         size = 200 --tile width and height
@@ -57,6 +63,7 @@ end
 function PlayState:update(dt)
     
     self.farm:update()
+    self.mole:update(dt)
 
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
@@ -230,6 +237,8 @@ function PlayState:render()
         love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
             math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))
     end
+
+    self.mole:render()
 
 
     --love.graphics.setColor(255, 0, 255, 255)

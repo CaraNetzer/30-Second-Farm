@@ -1,15 +1,6 @@
---[[
-    GD50
-    Legend of Zelda
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
-
 Player = Class{}
 
 function Player:init(def)
-    -- in top-down games, there are four directions instead of two
     self.direction = 'down'
 
     self.animations = self:createAnimations(def.animations)

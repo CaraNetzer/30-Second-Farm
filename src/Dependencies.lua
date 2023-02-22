@@ -19,6 +19,7 @@ require 'src/Player'
 require 'src/entity_defs'
 require 'src/Util'
 require 'src/Farm'
+require 'src/Mole'
 
 
 gTextures = {
@@ -27,14 +28,16 @@ gTextures = {
     ['backpack'] = love.graphics.newImage('graphics/backpack.png'),
     ['chest'] = love.graphics.newImage('graphics/better-chest.png'),
     ['house'] = love.graphics.newImage('graphics/house.png'),
-    ['grass'] = love.graphics.newImage('graphics/grass.png')
+    ['grass'] = love.graphics.newImage('graphics/grass.png'),
+    ['moles'] = love.graphics.newImage('graphics/moles-transformed.png')
 }
 
 gFrames = {
     ['character-walk'] = GenerateQuads(gTextures['character-walk'], 16, 32),
     ['plants'] = GenerateQuads(gTextures['plants'], 25, 25),
     ['backpack'] = GenerateQuads(gTextures['backpack'], 25, 25),
-    ['grass'] = GenerateQuads(gTextures['grass'], 16, 16)
+    ['grass'] = GenerateQuads(gTextures['grass'], 16, 16),
+    ['moles'] = GenerateMoleQuads(gTextures['moles'], MOLE_WIDTH, MOLE_HEIGHT)
 }
 
 

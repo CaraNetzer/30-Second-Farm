@@ -7,6 +7,15 @@
 ]]
 
 ENTITY_DEFS = {
+    ['moles'] = {
+        animations = {
+            ['moles'] = {
+                frames = {5, 4, 3, 2, 1},
+                interval = 0.25,
+                texture = 'moles'
+            }
+        }
+    },
     ['player'] = {
         walkSpeed = PLAYER_WALK_SPEED,
         animations = {
