@@ -11,7 +11,7 @@ ENTITY_DEFS = {
         animations = {
             ['moles'] = {
                 frames = {5, 4, 3, 2, 1},
-                interval = 0.25,
+                interval = 0.2,
                 texture = 'moles'
             }
         }

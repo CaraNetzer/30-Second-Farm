@@ -231,6 +231,8 @@ function PlayState:render()
             love.graphics.draw(gTextures['plants'], gFrames['plants'][PLANT_TILES[plant.sprite * plant.set]], plant.x, plant.y)
         end
     end
+    
+    self.mole:render()
 
     if self.player.currentAnimation then
         local anim = self.player.currentAnimation
@@ -238,7 +240,6 @@ function PlayState:render()
             math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))
     end
 
-    self.mole:render()
 
 
     --love.graphics.setColor(255, 0, 255, 255)
