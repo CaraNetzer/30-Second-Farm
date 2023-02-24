@@ -5,12 +5,12 @@ function Mole:init(def)
     self.animations = self:createAnimations(def.animations)
 
     -- dimensions
-    self.x = def.x
-    self.y = def.y
+    self.x = PLANT_SIZE*5 - X_OFFSET
+    self.y = PLANT_SIZE*5 - Y_OFFSET
     self.width = MOLE_WIDTH
     self.height = MOLE_HEIGHT
-    self.mapX = math.ceil((self.x+X_OFFSET))
-    self.mapY = math.ceil((self.y+Y_OFFSET))
+    self.mapX = math.ceil((self.x+X_OFFSET)/PLANT_SIZE)
+    self.mapY = math.ceil((self.y+Y_OFFSET)/PLANT_SIZE)
 
     self.currentAnimation = self.animations['moles']
 
@@ -45,10 +45,6 @@ function Mole:update(dt)
         self.currentAnimation:update(dt)
     end
 
-    --self.mapX = math.ceil((self.x+X_OFFSET)/25)
-    --self.mapY = math.ceil((self.y+Y_OFFSET)/25)
-
-    
 
 end
 
@@ -65,6 +61,6 @@ function Mole:render()
     if self.currentAnimation then
         local anim = self.currentAnimation
         love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
-            self.mapX, self.mapY, 0, 1)
+            (self.mapX*PLANT_SIZE)+X_OFFSET, (self.mapY*PLANT_SIZE)+Y_OFFSET, 0, 1)
     end
 end

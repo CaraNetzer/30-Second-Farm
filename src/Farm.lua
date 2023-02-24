@@ -4,18 +4,21 @@ Farm = Class{}
 function Farm:init(def)
     self.player = def.player
     self.size = def.size
-    self.grid = {}
+    self.garden = {}
     self.grass = {}
+    self.mole1 = def.mole1
+    self.mole2 = def.mole2
 
     --VIRTUAL_WIDTH = 384 - 9 = 375 (15 tiles wide)
     --VIRTUAL_HEIGHT = 216 - 16 = 200 (8 tiles tall)
     --make a grid of 25x25 sqaures
-    for i = 1, 15, 1 do
-        self.grid[i] = {}
-        for j = 1, 8, 1 do
-            table.insert(self.grid[i], {id = "empty", x = X_OFFSET + (i*PLANT_SIZE), y = Y_OFFSET + j*PLANT_SIZE})
+    for i = 5, 14, 1 do
+        self.garden[i] = {}
+        for j = 3, 7, 1 do
+            table.insert(self.garden[i], {id = "empty", x = X_OFFSET + (i*PLANT_SIZE), y = Y_OFFSET + j*PLANT_SIZE})
         end
     end
+
 
     --ground tiles
     for y = 1, 14 do
@@ -65,11 +68,37 @@ function Farm:init(def)
             end
         end
     end
+
+
+    --moles
+    Timer.every(2, function()
+        local hole1X = math.random(5, 13)
+        local hole1Y = math.random(1, 5)
+        local hole2X = math.random(5, 13)
+        local hole2Y = math.random(1, 5)
+
+        -- for r, row in pairs(self.garden) do
+        --     for h, hole in pairs(row) do
+        --         print(r .. '-' .. h .. 'h: ' .. hole.id)
+        --     end
+        -- end
+
+        --print(self.garden[hole1X][hole1Y].id)
+        --if self.garden[hole1X][hole1Y].id ~= 'empty' then
+            self.mole1.mapX = hole1X
+            self.mole1.mapY = hole1Y
+        --end
+        --print(self.garden[hole2X][hole2Y].id)
+        --if self.garden[hole2X][hole2Y].id ~= 'empty' then
+            self.mole2.mapX = hole2X
+            self.mole2.mapY = hole2Y
+        --end
+    end)
 end
 
 function Farm:update(dt)
 
-    --moles
+    
 
     --player collisions
     local fenceIds = {73, 74, 75, 81, 83, 89, 90, 91}

@@ -19,15 +19,22 @@ function PlayState:init()
         offsetY = 5
     }
 
-    self.mole = Mole {
-        x = 200,
-        y = 90,
+    self.mole1 = Mole {
+        --x = 200,
+        --y = 90,
+        animations = ENTITY_DEFS['moles'].animations
+    }
+    self.mole2 = Mole {
+        --x = 200,
+        --y = 120,
         animations = ENTITY_DEFS['moles'].animations
     }
 
     self.farm = Farm {
         player = self.player,
-        size = 200 --tile width and height
+        size = 200, --tile width and height
+        mole1 = self.mole1,
+        mole2 = self.mole2
     }
 
     self.plants = {}
@@ -38,6 +45,7 @@ function PlayState:init()
     self.waitTimer = 0
 
     self.backpack = {}
+    self.level = 1
 
 end
 
@@ -63,7 +71,8 @@ end
 function PlayState:update(dt)
     
     self.farm:update()
-    self.mole:update(dt)
+    self.mole1:update(dt)
+    self.mole2:update(dt)
 
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
@@ -75,7 +84,7 @@ function PlayState:update(dt)
         local gridX = self.player.mapX + 1
         local gridY = self.player.mapY + 1
         local plant = {
-            set = math.random(1,8),
+            set = math.random(1,self.level),
             sprite = 1,
             x = gridX,
             y = gridY,
@@ -86,13 +95,13 @@ function PlayState:update(dt)
         if self.player.direction == 'right' then
             gridY = gridY - 2
             gridX = gridX - 1
-            if self.farm.grid[gridX][gridY].id  == "empty" then
+            if self.farm.garden[gridX][gridY].id  == "empty" then
                 
-                self.farm.grid[gridX][gridY].set = plant.set
-                self.farm.grid[gridX][gridY].sprite = plant.sprite
+                self.farm.garden[gridX][gridY].set = plant.set
+                self.farm.garden[gridX][gridY].sprite = plant.sprite
 
                 
-                self.farm.grid[gridX][gridY].id = "plant"
+                self.farm.garden[gridX][gridY].id = "plant"
 
                 --for rendering at actual pixel position
                 plant.x = (gridX * PLANT_SIZE) + X_OFFSET
@@ -105,13 +114,13 @@ function PlayState:update(dt)
         elseif self.player.direction == 'left' then
             gridY = gridY - 2
             gridX = gridX - 3
-            if self.farm.grid[gridX][gridY].id  == "empty" then
+            if self.farm.garden[gridX][gridY].id  == "empty" then
                 
-                self.farm.grid[gridX][gridY].set = plant.set
-                self.farm.grid[gridX][gridY].sprite = plant.sprite
+                self.farm.garden[gridX][gridY].set = plant.set
+                self.farm.garden[gridX][gridY].sprite = plant.sprite
 
                 
-                self.farm.grid[gridX][gridY].id = "plant"
+                self.farm.garden[gridX][gridY].id = "plant"
 
                 --for rendering at actual pixel position
                 plant.x = (gridX * PLANT_SIZE) + X_OFFSET
@@ -124,13 +133,13 @@ function PlayState:update(dt)
         elseif self.player.direction == 'down' then
             gridY = gridY - 2
             gridX = gridX - 2
-            if self.farm.grid[gridX][gridY].id  == "empty" then
+            if self.farm.garden[gridX][gridY].id  == "empty" then
                 
-                self.farm.grid[gridX][gridY].set = plant.set
-                self.farm.grid[gridX][gridY].sprite = plant.sprite
+                self.farm.garden[gridX][gridY].set = plant.set
+                self.farm.garden[gridX][gridY].sprite = plant.sprite
 
                 
-                self.farm.grid[gridX][gridY].id = "plant"
+                self.farm.garden[gridX][gridY].id = "plant"
 
                 --for rendering at actual pixel position
                 plant.x = (gridX * PLANT_SIZE) + X_OFFSET
@@ -143,13 +152,13 @@ function PlayState:update(dt)
         elseif self.player.direction == 'up' then
             gridY = gridY - 3
             gridX = gridX - 2   
-            if self.farm.grid[gridX][gridY].id  == "empty" then
+            if self.farm.garden[gridX][gridY].id  == "empty" then
                 
-                self.farm.grid[gridX][gridY].set = plant.set
-                self.farm.grid[gridX][gridY].sprite = plant.sprite
+                self.farm.garden[gridX][gridY].set = plant.set
+                self.farm.garden[gridX][gridY].sprite = plant.sprite
 
                 
-                self.farm.grid[gridX][gridY].id = "plant"
+                self.farm.garden[gridX][gridY].id = "plant"
 
                 --for rendering at actual pixel position
                 plant.x = (gridX * PLANT_SIZE) + X_OFFSET
@@ -232,7 +241,8 @@ function PlayState:render()
         end
     end
     
-    self.mole:render()
+    self.mole1:render()
+    self.mole2:render()
 
     if self.player.currentAnimation then
         local anim = self.player.currentAnimation
