@@ -28,7 +28,8 @@ function Mole:createAnimations(animations)
         animationsReturned[k] = Animation {
             texture = animationDef.texture or 'entities',
             frames = animationDef.frames,
-            interval = animationDef.interval
+            interval = animationDef.interval, 
+            looping = animationDef.looping
         }
     end
 
@@ -41,9 +42,9 @@ end
 
 function Mole:update(dt)
 
-    if self.currentAnimation.currentFrame ~= 5 then
+    --if self.currentAnimation.currentFrame ~= 5 then
         self.currentAnimation:update(dt)
-    end
+    --end
 
 
 end
@@ -63,4 +64,5 @@ function Mole:render()
         love.graphics.draw(gTextures[anim.texture], gFrames[anim.texture][anim:getCurrentFrame()],
             (self.mapX*PLANT_SIZE)+X_OFFSET, (self.mapY*PLANT_SIZE)+Y_OFFSET, 0, 1)
     end
+
 end

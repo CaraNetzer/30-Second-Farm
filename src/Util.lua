@@ -57,6 +57,7 @@ function GenerateMoleQuads(atlas, tilewidth, tileheight)
     spritesheet[3] = love.graphics.newQuad((MOLE_WIDTH*2) + 8, 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
     spritesheet[4] = love.graphics.newQuad((MOLE_WIDTH*3) + 8, 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
     spritesheet[5] = love.graphics.newQuad((MOLE_WIDTH*3) + 8, 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
+    spritesheet[6] = love.graphics.newQuad((MOLE_WIDTH*6), 0, MOLE_WIDTH, MOLE_HEIGHT, atlas:getDimensions())
     
     return spritesheet
 end

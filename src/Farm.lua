@@ -70,29 +70,27 @@ function Farm:init(def)
     end
 
 
-    --moles
-    Timer.every(2, function()
-        local hole1X = math.random(5, 13)
-        local hole1Y = math.random(1, 5)
-        local hole2X = math.random(5, 13)
-        local hole2Y = math.random(1, 5)
+    --spawning moles at random grid locations
+    Timer.every(#ENTITY_DEFS['moles'].animations['moles'].frames*.1, function()
+        local hole1X = math.random(6, 11)
+        local hole1Y = math.random(2, 5)
+        local hole2X = math.random(6, 11)
+        local hole2Y = math.random(2, 5)
 
-        -- for r, row in pairs(self.garden) do
-        --     for h, hole in pairs(row) do
-        --         print(r .. '-' .. h .. 'h: ' .. hole.id)
-        --     end
-        -- end
+        --make sure we've chosen a hole that there is not a plant on 
+        while self.garden[hole1X][hole1Y].id ~= 'empty' do
+            hole1X = math.random(6, 11)
+            hole1Y = math.random(2, 5)
+        end
+        while self.garden[hole2X][hole2Y].id ~= 'empty' do
+            hole2X = math.random(6, 11)
+            hole2Y = math.random(2, 5)
+        end
 
-        --print(self.garden[hole1X][hole1Y].id)
-        --if self.garden[hole1X][hole1Y].id ~= 'empty' then
-            self.mole1.mapX = hole1X
-            self.mole1.mapY = hole1Y
-        --end
-        --print(self.garden[hole2X][hole2Y].id)
-        --if self.garden[hole2X][hole2Y].id ~= 'empty' then
-            self.mole2.mapX = hole2X
-            self.mole2.mapY = hole2Y
-        --end
+        self.mole1.mapX = hole1X
+        self.mole1.mapY = hole1Y
+        self.mole2.mapX = hole2X
+        self.mole2.mapY = hole2Y
     end)
 end
 
