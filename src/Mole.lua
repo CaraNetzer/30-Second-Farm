@@ -5,8 +5,8 @@ function Mole:init(def)
     self.animations = self:createAnimations(def.animations)
 
     -- dimensions
-    self.x = PLANT_SIZE*5 - X_OFFSET
-    self.y = PLANT_SIZE*5 - Y_OFFSET
+    self.x = PLANT_SIZE*(math.random(6, 11)) - X_OFFSET
+    self.y = PLANT_SIZE*(math.random(2, 5)) - Y_OFFSET
     self.width = MOLE_WIDTH
     self.height = MOLE_HEIGHT
     self.mapX = math.ceil((self.x+X_OFFSET)/PLANT_SIZE)

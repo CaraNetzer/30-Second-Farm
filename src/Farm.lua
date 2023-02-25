@@ -12,7 +12,7 @@ function Farm:init(def)
     --VIRTUAL_WIDTH = 384 - 9 = 375 (15 tiles wide)
     --VIRTUAL_HEIGHT = 216 - 16 = 200 (8 tiles tall)
     --make a grid of 25x25 sqaures
-    for i = 5, 14, 1 do
+    for i = 5, 12, 1 do
         self.garden[i] = {}
         for j = 3, 7, 1 do
             table.insert(self.garden[i], {id = "empty", x = X_OFFSET + (i*PLANT_SIZE), y = Y_OFFSET + j*PLANT_SIZE})

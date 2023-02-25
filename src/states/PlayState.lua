@@ -78,95 +78,113 @@ function PlayState:update(dt)
         love.event.quit()
     end
 
+    --if player is located within the garden
+    if (self.player.mapX >= 5 and self.player.mapX <= 13 and self.player.mapY >= 2 and self.player.mapY <= 8) then
+        --plant random seed based on player direction
+        if love.keyboard.wasPressed('p') then
+            
+            local plant = {
+                set = math.random(1,self.level),
+                sprite = 1,
+                gridX = self.player.mapX + 1,
+                gridY = self.player.mapY + 1,
+                x = gridX,
+                y = gridY,
+                width = PLANT_SIZE - 5, -- minus 5 is for collision wiggle room
+                height = PLANT_SIZE - 5
+            }
 
-    --plant random seed based on player direction
-    if love.keyboard.wasPressed('p') then
-        local gridX = self.player.mapX + 1
-        local gridY = self.player.mapY + 1
-        local plant = {
-            set = math.random(1,self.level),
-            sprite = 1,
-            x = gridX,
-            y = gridY,
-            width = PLANT_SIZE - 5, -- minus 5 is for collision wiggle room
-            height = PLANT_SIZE - 5
-        }
+            if self.player.direction == 'right' then
+                plant.gridY = plant.gridY - 2
+                plant.gridX = plant.gridX - 1
+                print(plant.gridX .. ", " .. plant.gridY)
+                if plant.gridY >= 3 and plant.gridY <= 7 and plant.gridX >= 5 and plant.gridX <= 12 then
+                    if self.farm.garden[plant.gridX][plant.gridY].id == "empty" then
+                        
+                        self.farm.garden[plant.gridX][plant.gridY].set = plant.set
+                        self.farm.garden[plant.gridX][plant.gridY].sprite = plant.sprite
 
-        if self.player.direction == 'right' then
-            gridY = gridY - 2
-            gridX = gridX - 1
-            if self.farm.garden[gridX][gridY].id  == "empty" then
-                
-                self.farm.garden[gridX][gridY].set = plant.set
-                self.farm.garden[gridX][gridY].sprite = plant.sprite
+                        
+                        self.farm.garden[plant.gridX][plant.gridY].id = "plant"
 
-                
-                self.farm.garden[gridX][gridY].id = "plant"
+                        --for rendering at actual pixel position
+                        plant.x = (plant.gridX * PLANT_SIZE) + X_OFFSET
+                        plant.y = (plant.gridY * PLANT_SIZE) + Y_OFFSET
+                        table.insert(self.plants, plant)
+                    else
+                        gSounds['plant-blocked']:stop()
+                        gSounds['plant-blocked']:play()
+                    end
+                end
+            elseif self.player.direction == 'left' then
+                plant.gridY = plant.gridY - 2
+                plant.gridX = plant.gridX - 3
+                print(plant.gridX .. ", " .. plant.gridY)
 
-                --for rendering at actual pixel position
-                plant.x = (gridX * PLANT_SIZE) + X_OFFSET
-                plant.y = (gridY * PLANT_SIZE) + Y_OFFSET
-                table.insert(self.plants, plant)
-            else
-                gSounds['plant-blocked']:stop()
-                gSounds['plant-blocked']:play()
-            end
-        elseif self.player.direction == 'left' then
-            gridY = gridY - 2
-            gridX = gridX - 3
-            if self.farm.garden[gridX][gridY].id  == "empty" then
-                
-                self.farm.garden[gridX][gridY].set = plant.set
-                self.farm.garden[gridX][gridY].sprite = plant.sprite
+                if plant.gridY >= 3 and plant.gridY <= 7 and plant.gridX >= 5 and plant.gridX <= 12 then
+                    if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
+                        
+                        self.farm.garden[plant.gridX][plant.gridY].set = plant.set
+                        self.farm.garden[plant.gridX][plant.gridY].sprite = plant.sprite
 
-                
-                self.farm.garden[gridX][gridY].id = "plant"
+                        
+                        self.farm.garden[plant.gridX][plant.gridY].id = "plant"
 
-                --for rendering at actual pixel position
-                plant.x = (gridX * PLANT_SIZE) + X_OFFSET
-                plant.y = (gridY * PLANT_SIZE) + Y_OFFSET
-                table.insert(self.plants, plant)
-            else
-                gSounds['plant-blocked']:stop()
-                gSounds['plant-blocked']:play()
-            end
-        elseif self.player.direction == 'down' then
-            gridY = gridY - 2
-            gridX = gridX - 2
-            if self.farm.garden[gridX][gridY].id  == "empty" then
-                
-                self.farm.garden[gridX][gridY].set = plant.set
-                self.farm.garden[gridX][gridY].sprite = plant.sprite
+                        --for rendering at actual pixel position
+                        plant.x = (plant.gridX * PLANT_SIZE) + X_OFFSET
+                        plant.y = (plant.gridY * PLANT_SIZE) + Y_OFFSET
+                        table.insert(self.plants, plant)
+                    else
+                        gSounds['plant-blocked']:stop()
+                        gSounds['plant-blocked']:play()
+                    end
+                end
+            elseif self.player.direction == 'down' then
+                plant.gridY = plant.gridY - 2
+                plant.gridX = plant.gridX - 2
+                print(plant.gridX .. ", " .. plant.gridY)
 
-                
-                self.farm.garden[gridX][gridY].id = "plant"
+                if plant.gridY >= 3 and plant.gridY <= 7 and plant.gridX >= 5 and plant.gridX <= 12 then
+                    if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
+                        
+                        self.farm.garden[plant.gridX][plant.gridY].set = plant.set
+                        self.farm.garden[plant.gridX][plant.gridY].sprite = plant.sprite
 
-                --for rendering at actual pixel position
-                plant.x = (gridX * PLANT_SIZE) + X_OFFSET
-                plant.y = (gridY * PLANT_SIZE) + Y_OFFSET
-                table.insert(self.plants, plant)
-            else
-                gSounds['plant-blocked']:stop()
-                gSounds['plant-blocked']:play()
-            end
-        elseif self.player.direction == 'up' then
-            gridY = gridY - 3
-            gridX = gridX - 2   
-            if self.farm.garden[gridX][gridY].id  == "empty" then
-                
-                self.farm.garden[gridX][gridY].set = plant.set
-                self.farm.garden[gridX][gridY].sprite = plant.sprite
+                        
+                        self.farm.garden[plant.gridX][plant.gridY].id = "plant"
 
-                
-                self.farm.garden[gridX][gridY].id = "plant"
+                        --for rendering at actual pixel position
+                        plant.x = (plant.gridX * PLANT_SIZE) + X_OFFSET
+                        plant.y = (plant.gridY * PLANT_SIZE) + Y_OFFSET
+                        table.insert(self.plants, plant)
+                    else
+                        gSounds['plant-blocked']:stop()
+                        gSounds['plant-blocked']:play()
+                    end
+                end
+            elseif self.player.direction == 'up' then
+                plant.gridY = plant.gridY - 3
+                plant.gridX = plant.gridX - 2   
+                print(plant.gridX .. ", " .. plant.gridY)
 
-                --for rendering at actual pixel position
-                plant.x = (gridX * PLANT_SIZE) + X_OFFSET
-                plant.y = (gridY * PLANT_SIZE) + Y_OFFSET
-                table.insert(self.plants, plant)
-            else
-                gSounds['plant-blocked']:stop()
-                gSounds['plant-blocked']:play()
+                if plant.gridY >= 3 and plant.gridY <= 7 and plant.gridX >= 5 and plant.gridX <= 12 then
+                    if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
+                        
+                        self.farm.garden[plant.gridX][plant.gridY].set = plant.set
+                        self.farm.garden[plant.gridX][plant.gridY].sprite = plant.sprite
+
+                        
+                        self.farm.garden[plant.gridX][plant.gridY].id = "plant"
+
+                        --for rendering at actual pixel position
+                        plant.x = (plant.gridX * PLANT_SIZE) + X_OFFSET
+                        plant.y = (plant.gridY * PLANT_SIZE) + Y_OFFSET
+                        table.insert(self.plants, plant)
+                    else
+                        gSounds['plant-blocked']:stop()
+                        gSounds['plant-blocked']:play()
+                    end
+                end
             end
         end
     end
@@ -182,6 +200,7 @@ function PlayState:update(dt)
             if self.player:collides(plant) then 
                 --when player collides with a fully grown plant add it to backpack and remove it from plants table
                 table.insert(self.backpack, plant)
+                self.farm.garden[plant.gridX][plant.gridY].id = "empty"
                 table.remove(self.plants, i)
 
                 gSounds['plant-collected']:stop()
