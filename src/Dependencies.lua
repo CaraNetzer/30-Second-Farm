@@ -29,7 +29,8 @@ gTextures = {
     ['chest'] = love.graphics.newImage('graphics/better-chest.png'),
     ['house'] = love.graphics.newImage('graphics/house.png'),
     ['grass'] = love.graphics.newImage('graphics/grass.png'),
-    ['moles'] = love.graphics.newImage('graphics/moles-transformed.png')
+    ['moles'] = love.graphics.newImage('graphics/moles-transformed.png'),
+    ['hearts'] = love.graphics.newImage('graphics/hearts.png')
 }
 
 gFrames = {
@@ -37,7 +38,8 @@ gFrames = {
     ['plants'] = GenerateQuads(gTextures['plants'], 25, 25),
     ['backpack'] = GenerateQuads(gTextures['backpack'], 25, 25),
     ['grass'] = GenerateQuads(gTextures['grass'], 16, 16),
-    ['moles'] = GenerateMoleQuads(gTextures['moles'], MOLE_WIDTH, MOLE_HEIGHT)
+    ['moles'] = GenerateMoleQuads(gTextures['moles'], MOLE_WIDTH, MOLE_HEIGHT),
+    ['hearts'] = GenerateQuads(gTextures['hearts'], 16, 16)
 }
 
 

@@ -273,6 +273,24 @@ function PlayState:render()
             math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))
     end
 
+    local healthLeft = self.player.health
+    local heartFrame = 1
+
+    for i = 1, 3 do
+        if healthLeft > 1 then
+            heartFrame = 5
+        elseif healthLeft == 1 then
+            heartFrame = 5
+        else
+            heartFrame = 1
+        end
+
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][heartFrame],
+            (i - 1) * (TILE_SIZE + 1), 2)
+        
+        healthLeft = healthLeft - 1
+    end
+
 
 
     --love.graphics.setColor(255, 0, 255, 255)

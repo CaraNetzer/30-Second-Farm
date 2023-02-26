@@ -19,7 +19,7 @@ function Player:init(def)
 
     self.walkSpeed = def.walkSpeed
 
-    self.health = def.health
+    self.health = 2
 
     -- flags for flashing the entity when hit
     self.invulnerable = false
@@ -51,7 +51,29 @@ function Player:changeAnimation(name)
     self.currentAnimation = self.animations[name]
 end
 
+function Player:damage(dmg)
+    self.health = self.health - dmg
+end
+
+function Player:goInvulnerable(duration)
+    self.invulnerable = true
+    self.invulnerableDuration = duration
+end
+
 function Player:update(dt)
+
+    --if hit by mole player will be invulnerable for 1 sec
+    if self.invulnerable then
+        self.flashTimer = self.flashTimer + dt
+        self.invulnerableTimer = self.invulnerableTimer + dt
+
+        if self.invulnerableTimer > self.invulnerableDuration then
+            self.invulnerable = false
+            self.invulnerableTimer = 0
+            self.invulnerableDuration = 0
+            self.flashTimer = 0
+        end
+    end
 
     if self.currentAnimation then
         self.currentAnimation:update(dt)
@@ -128,5 +150,14 @@ function Player:collides(target)
 end
 
 function Player:render()
+
+    -- draw sprite slightly transparent if invulnerable every 0.04 seconds
+    if self.invulnerable and self.flashTimer > 0.06 then
+        self.flashTimer = 0
+        love.graphics.setColor(1, 1, 1, 64/255)
+    end
+
+    love.graphics.setColor(1, 1, 1, 1)
+
     self.x, self.y = self.x + (adjacentOffsetX or 0), self.y + (adjacentOffsetY or 0) 
 end
