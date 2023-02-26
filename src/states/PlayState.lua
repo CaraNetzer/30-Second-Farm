@@ -98,7 +98,8 @@ function PlayState:update(dt)
                 plant.gridY = plant.gridY - 2
                 plant.gridX = plant.gridX - 1
                 print(plant.gridX .. ", " .. plant.gridY)
-                if plant.gridY >= 3 and plant.gridY <= 7 and plant.gridX >= 5 and plant.gridX <= 12 then
+                if plant.gridY >= 1 and plant.gridY <= 6 and plant.gridX >= 6 and plant.gridX <= 12 then
+                    print('right: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
                     if self.farm.garden[plant.gridX][plant.gridY].id == "empty" then
                         
                         self.farm.garden[plant.gridX][plant.gridY].set = plant.set
@@ -121,7 +122,8 @@ function PlayState:update(dt)
                 plant.gridX = plant.gridX - 3
                 print(plant.gridX .. ", " .. plant.gridY)
 
-                if plant.gridY >= 3 and plant.gridY <= 7 and plant.gridX >= 5 and plant.gridX <= 12 then
+                if plant.gridY >= 1 and plant.gridY <= 6 and plant.gridX >= 6 and plant.gridX <= 12 then
+                    print('left: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
                     if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
                         
                         self.farm.garden[plant.gridX][plant.gridY].set = plant.set
@@ -144,7 +146,8 @@ function PlayState:update(dt)
                 plant.gridX = plant.gridX - 2
                 print(plant.gridX .. ", " .. plant.gridY)
 
-                if plant.gridY >= 3 and plant.gridY <= 7 and plant.gridX >= 5 and plant.gridX <= 12 then
+                if plant.gridY >= 1 and plant.gridY <= 6 and plant.gridX >= 6 and plant.gridX <= 12 then
+                    print('down: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
                     if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
                         
                         self.farm.garden[plant.gridX][plant.gridY].set = plant.set
@@ -167,7 +170,8 @@ function PlayState:update(dt)
                 plant.gridX = plant.gridX - 2   
                 print(plant.gridX .. ", " .. plant.gridY)
 
-                if plant.gridY >= 3 and plant.gridY <= 7 and plant.gridX >= 5 and plant.gridX <= 12 then
+                if plant.gridY >= 1 and plant.gridY <= 6 and plant.gridX >= 6 and plant.gridX <= 12 then
+                    print('up: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
                     if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
                         
                         self.farm.garden[plant.gridX][plant.gridY].set = plant.set

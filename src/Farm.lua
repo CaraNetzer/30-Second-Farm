@@ -12,10 +12,13 @@ function Farm:init(def)
     --VIRTUAL_WIDTH = 384 - 9 = 375 (15 tiles wide)
     --VIRTUAL_HEIGHT = 216 - 16 = 200 (8 tiles tall)
     --make a grid of 25x25 sqaures
-    for i = 5, 12, 1 do
+    print('garden indexes:')
+    for i = 6, 12, 1 do
         self.garden[i] = {}
-        for j = 3, 7, 1 do
-            table.insert(self.garden[i], {id = "empty", x = X_OFFSET + (i*PLANT_SIZE), y = Y_OFFSET + j*PLANT_SIZE})
+        --print('\t'..i)
+        for j = 1, 6, 1 do
+            table.insert(self.garden[i], j, {id = "empty", x = X_OFFSET + (i*PLANT_SIZE), y = Y_OFFSET + j*PLANT_SIZE})
+            if self.garden[i][j] then print(i .. ', ' .. j) end
         end
     end
 
@@ -73,18 +76,18 @@ function Farm:init(def)
     --spawning moles at random grid locations
     Timer.every(#ENTITY_DEFS['moles'].animations['moles'].frames*.1, function()
         local hole1X = math.random(6, 11)
-        local hole1Y = math.random(2, 5)
+        local hole1Y = math.random(1, 6)
         local hole2X = math.random(6, 11)
-        local hole2Y = math.random(2, 5)
+        local hole2Y = math.random(1, 6)
 
         --make sure we've chosen a hole that there is not a plant on 
         while self.garden[hole1X][hole1Y].id ~= 'empty' do
             hole1X = math.random(6, 11)
-            hole1Y = math.random(2, 5)
+            hole1Y = math.random(1, 6)
         end
         while self.garden[hole2X][hole2Y].id ~= 'empty' do
             hole2X = math.random(6, 11)
-            hole2Y = math.random(2, 5)
+            hole2Y = math.random(3, 6)
         end
 
         self.mole1.mapX = hole1X
