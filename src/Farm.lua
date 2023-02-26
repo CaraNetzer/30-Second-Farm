@@ -101,7 +101,7 @@ function Farm:update(dt)
 
     
 
-    --player collisions
+    --player fence collisions
     local fenceIds = {73, 74, 75, 81, 83, 89, 90, 91}
     for t, tile in pairs(self.grass) do
         for f, fence in pairs(fenceIds) do
@@ -109,6 +109,18 @@ function Farm:update(dt)
                 self.player.x = (tile.x*16) - 16
             end
             --try doing it based on x and y values maybe instead of tileIds
+        end
+    end
+
+    --player mole collisions
+    if not self.player.dead and (self.player:collides(self.mole1) or self.player:collides(self.mole2))
+         and not self.player.invulnerable then
+        gSounds['hit-enemy']:play()
+        self.player:damage(1)
+        self.player:goInvulnerable(1.5)
+
+        if self.player.health == 0 then
+            gStateMachine:change('start')
         end
     end
 

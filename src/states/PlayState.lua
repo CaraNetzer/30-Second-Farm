@@ -97,9 +97,9 @@ function PlayState:update(dt)
             if self.player.direction == 'right' then
                 plant.gridY = plant.gridY - 2
                 plant.gridX = plant.gridX - 1
-                print(plant.gridX .. ", " .. plant.gridY)
+                --print(plant.gridX .. ", " .. plant.gridY)
                 if plant.gridY >= 1 and plant.gridY <= 6 and plant.gridX >= 6 and plant.gridX <= 12 then
-                    print('right: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
+                    --print('right: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
                     if self.farm.garden[plant.gridX][plant.gridY].id == "empty" then
                         
                         self.farm.garden[plant.gridX][plant.gridY].set = plant.set
@@ -120,10 +120,10 @@ function PlayState:update(dt)
             elseif self.player.direction == 'left' then
                 plant.gridY = plant.gridY - 2
                 plant.gridX = plant.gridX - 3
-                print(plant.gridX .. ", " .. plant.gridY)
+                --print(plant.gridX .. ", " .. plant.gridY)
 
                 if plant.gridY >= 1 and plant.gridY <= 6 and plant.gridX >= 6 and plant.gridX <= 12 then
-                    print('left: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
+                    --print('left: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
                     if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
                         
                         self.farm.garden[plant.gridX][plant.gridY].set = plant.set
@@ -144,10 +144,10 @@ function PlayState:update(dt)
             elseif self.player.direction == 'down' then
                 plant.gridY = plant.gridY - 2
                 plant.gridX = plant.gridX - 2
-                print(plant.gridX .. ", " .. plant.gridY)
+                --print(plant.gridX .. ", " .. plant.gridY)
 
                 if plant.gridY >= 1 and plant.gridY <= 6 and plant.gridX >= 6 and plant.gridX <= 12 then
-                    print('down: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
+                    --print('down: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
                     if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
                         
                         self.farm.garden[plant.gridX][plant.gridY].set = plant.set
@@ -168,10 +168,10 @@ function PlayState:update(dt)
             elseif self.player.direction == 'up' then
                 plant.gridY = plant.gridY - 3
                 plant.gridX = plant.gridX - 2   
-                print(plant.gridX .. ", " .. plant.gridY)
+                --print(plant.gridX .. ", " .. plant.gridY)
 
                 if plant.gridY >= 1 and plant.gridY <= 6 and plant.gridX >= 6 and plant.gridX <= 12 then
-                    print('up: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
+                    --print('up: ' .. self.farm.garden[plant.gridX][plant.gridY].id)
                     if self.farm.garden[plant.gridX][plant.gridY].id  == "empty" then
                         
                         self.farm.garden[plant.gridX][plant.gridY].set = plant.set
@@ -273,9 +273,9 @@ function PlayState:render()
             math.floor(self.player.x - self.player.offsetX), math.floor(self.player.y - self.player.offsetY))
     end
 
+    --health GUI
     local healthLeft = self.player.health
     local heartFrame = 1
-
     for i = 1, 3 do
         if healthLeft > 1 then
             heartFrame = 5
@@ -291,9 +291,14 @@ function PlayState:render()
         healthLeft = healthLeft - 1
     end
 
+    --level and backpack GUI
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.printf('Level: ' .. self.level, 0, 2, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Plants: ' .. #self.backpack, 0, 2, VIRTUAL_WIDTH, 'right')
 
-
-    --love.graphics.setColor(255, 0, 255, 255)
-    --love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
+    love.graphics.setColor(255, 0, 255, 255)
+    love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
+    love.graphics.rectangle('line', self.mole1.x, self.mole1.y, self.mole1.width, self.mole1.height)
+    love.graphics.rectangle('line', self.mole2.x, self.mole2.y, self.mole2.width, self.mole2.height)
 
 end
