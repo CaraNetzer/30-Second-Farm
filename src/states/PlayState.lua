@@ -296,9 +296,9 @@ function PlayState:render()
     love.graphics.printf('Level: ' .. self.level, 0, 2, VIRTUAL_WIDTH, 'center')
     love.graphics.printf('Plants: ' .. #self.backpack, 0, 2, VIRTUAL_WIDTH, 'right')
 
-    love.graphics.setColor(255, 0, 255, 255)
-    love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
-    love.graphics.rectangle('line', self.mole1.x, self.mole1.y, self.mole1.width, self.mole1.height)
-    love.graphics.rectangle('line', self.mole2.x, self.mole2.y, self.mole2.width, self.mole2.height)
+    -- love.graphics.setColor(255, 0, 255, 255)
+    -- love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
+    -- love.graphics.rectangle('line', self.mole1.x, self.mole1.y, self.mole1.width, self.mole1.height)
+    -- love.graphics.rectangle('line', self.mole2.x, self.mole2.y, self.mole2.width, self.mole2.height)
 
 end

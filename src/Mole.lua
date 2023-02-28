@@ -5,12 +5,12 @@ function Mole:init(def)
     self.animations = self:createAnimations(def.animations)
 
     -- dimensions
-    self.x = PLANT_SIZE*(math.random(6, 11)) - X_OFFSET
-    self.y = PLANT_SIZE*(math.random(2, 5)) - Y_OFFSET
+    self.x = PLANT_SIZE*(math.random(6, 11)) + X_OFFSET
+    self.y = PLANT_SIZE*(math.random(1, 6)) + Y_OFFSET
     self.width = MOLE_WIDTH
     self.height = MOLE_HEIGHT
-    self.mapX = math.ceil((self.x+X_OFFSET)/PLANT_SIZE)
-    self.mapY = math.ceil((self.y+Y_OFFSET)/PLANT_SIZE)
+    self.mapX = math.ceil((self.x-X_OFFSET)/PLANT_SIZE)
+    self.mapY = math.ceil((self.y-Y_OFFSET)/PLANT_SIZE)
 
     self.currentAnimation = self.animations['moles']
 

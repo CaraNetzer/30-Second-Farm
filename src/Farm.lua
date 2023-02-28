@@ -87,13 +87,18 @@ function Farm:init(def)
         end
         while self.garden[hole2X][hole2Y].id ~= 'empty' do
             hole2X = math.random(6, 11)
-            hole2Y = math.random(3, 6)
+            hole2Y = math.random(1, 6)
         end
 
         self.mole1.mapX = hole1X
         self.mole1.mapY = hole1Y
         self.mole2.mapX = hole2X
         self.mole2.mapY = hole2Y
+
+        self.mole1.x = PLANT_SIZE*hole1X + X_OFFSET
+        self.mole1.y = PLANT_SIZE*hole1Y + Y_OFFSET
+        self.mole2.x = PLANT_SIZE*hole2X + X_OFFSET
+        self.mole2.y = PLANT_SIZE*hole2Y + Y_OFFSET
     end)
 end
 
