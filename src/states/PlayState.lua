@@ -12,9 +12,6 @@ function PlayState:init()
         width = 16,
         height = 22,
 
-        -- one heart == 2 health
-        health = 6,
-
         -- rendering and collision offset for spaced sprites
         offsetY = 5
     }
@@ -46,6 +43,17 @@ function PlayState:init()
 
     self.backpack = {}
     self.level = 1
+
+    self.timer = 30
+    -- subtract 1 from timer every second
+    Timer.every(1, function()
+        self.timer = self.timer - 1
+
+        -- play warning sound on timer if we get low
+        if self.timer <= 5 then
+            --gSounds['clock']:play()
+        end
+    end)
 
 end
 
@@ -295,6 +303,7 @@ function PlayState:render()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.printf('Level: ' .. self.level, 0, 2, VIRTUAL_WIDTH, 'center')
     love.graphics.printf('Plants: ' .. #self.backpack, 0, 2, VIRTUAL_WIDTH, 'right')
+    love.graphics.printf('Timer: ' .. tostring(self.timer), 16*3+20, 0, VIRTUAL_WIDTH)
 
     -- love.graphics.setColor(255, 0, 255, 255)
     -- love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
