@@ -44,6 +44,8 @@ function PlayState:init()
     self.backpack = {}
     self.level = 1
 
+    self.dayTime = true
+
     self.timer = 30
     -- subtract 1 from timer every second
     Timer.every(1, function()
@@ -79,17 +81,37 @@ end
 function PlayState:update(dt)
     
     self.farm:update()
-    self.mole1:update(dt)
-    self.mole2:update(dt)
+
+    if self.dayTime then
+        self.mole1:update(dt)
+        self.mole2:update(dt)
+    else --if the timer runs out, don't render the moles and move them out of the garden
+        self.mole1.x = 1000
+        self.mole2.x = 1000
+    end
 
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
 
+     -- moles stop if time runs out
+     if self.timer <= 0 then
+        
+        -- clear timers from prior PlayStates
+        Timer.clear()
+        self.dayTime = false
+        
+        --gSounds['game-over']:play()
+
+        -- gStateMachine:change('game-over', {
+        --     score = self.score
+        -- })
+    end
+
     --if player is located within the garden
     if (self.player.mapX >= 5 and self.player.mapX <= 13 and self.player.mapY >= 2 and self.player.mapY <= 8) then
         --plant random seed based on player direction
-        if love.keyboard.wasPressed('p') then
+        if self.timer > 0 and love.keyboard.wasPressed('p') then
             
             local plant = {
                 set = math.random(1,self.level),
@@ -223,11 +245,6 @@ function PlayState:update(dt)
         end
     end
 
-    --allow player to pick up fully grown plants
-    --if PLANT_TILES contains plant.sprite and player is next to a plant
-        --add plant to backpack
-        --remove plant from self.plants
-
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gStateMachine:change('start')
     end
@@ -272,8 +289,10 @@ function PlayState:render()
         end
     end
     
-    self.mole1:render()
-    self.mole2:render()
+    if self.dayTime then
+        self.mole1:render()
+        self.mole2:render()
+    end
 
     if self.player.currentAnimation then
         local anim = self.player.currentAnimation
