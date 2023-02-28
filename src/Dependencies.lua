@@ -11,6 +11,8 @@ Camera = require "lib/camera"
 require 'src/states/BaseState'
 require 'src/states/StartState'
 require 'src/states/PlayState'
+require 'src/states/FadeInState'
+require 'src/states/FadeOutState'
 
 require 'src/StateMachine'
 require 'src/Constants'
