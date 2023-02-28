@@ -45,8 +45,10 @@ function PlayState:init()
     self.level = 1
 
     self.dayTime = true
+    self.chestGlow = false
+    self.chestGlowOpacity = 0
 
-    self.timer = 30
+    self.timer = 10
     -- subtract 1 from timer every second
     Timer.every(1, function()
         self.timer = self.timer - 1
@@ -55,7 +57,15 @@ function PlayState:init()
         if self.timer <= 5 then
             --gSounds['clock']:play()
         end
+
+        Timer.tween(.5, {
+            [self] = { chestGlowOpacity = 1 }
+        })
+        print(self.chestGlowOpacity)
+        self.chestGlowOpacity = 0
     end)
+
+    
 
 end
 
@@ -94,19 +104,22 @@ function PlayState:update(dt)
         love.event.quit()
     end
 
-     -- moles stop if time runs out
+     -- moles stop, plants clear, chest glows if time runs out
      if self.timer <= 0 then
-        
-        -- clear timers from prior PlayStates
         Timer.clear()
         self.dayTime = false
-        
-        --gSounds['game-over']:play()
-
-        -- gStateMachine:change('game-over', {
-        --     score = self.score
-        -- })
+        self.chestGlow = true
+        self.plants = {}
     end
+
+    -- if self.chestGlow then
+    --     Timer.every(1, function()
+    --         Timer.tween(.5, {
+    --             [self] = { chestGlowOpacity = 1 }
+    --         })
+            
+    --     end)
+    -- end
 
     --if player is located within the garden
     if (self.player.mapX >= 5 and self.player.mapX <= 13 and self.player.mapY >= 2 and self.player.mapY <= 8) then
@@ -291,7 +304,14 @@ function PlayState:render()
     
     if self.dayTime then
         self.mole1:render()
-        self.mole2:render()
+        self.mole2:render()        
+    end
+
+    if self.chestGlow then
+        print(self.chestGlowOpacity)
+        love.graphics.setColor(255, 223, 0, self.chestGlowOpacity)
+        love.graphics.rectangle('line', VIRTUAL_WIDTH - 25, VIRTUAL_HEIGHT/2, CHEST_WIDTH, CHEST_HEIGHT)
+        love.graphics.setColor(1, 1, 1, 1)
     end
 
     if self.player.currentAnimation then

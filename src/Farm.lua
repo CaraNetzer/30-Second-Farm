@@ -12,13 +12,13 @@ function Farm:init(def)
     --VIRTUAL_WIDTH = 384 - 9 = 375 (15 tiles wide)
     --VIRTUAL_HEIGHT = 216 - 16 = 200 (8 tiles tall)
     --make a grid of 25x25 sqaures
-    print('garden indexes:')
+    --print('garden indexes:')
     for i = 6, 12, 1 do
         self.garden[i] = {}
         --print('\t'..i)
         for j = 1, 6, 1 do
             table.insert(self.garden[i], j, {id = "empty", x = X_OFFSET + (i*PLANT_SIZE), y = Y_OFFSET + j*PLANT_SIZE})
-            if self.garden[i][j] then print(i .. ', ' .. j) end
+            --if self.garden[i][j] then print(i .. ', ' .. j) end
         end
     end
 
