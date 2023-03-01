@@ -29,6 +29,8 @@ function Player:init(def)
     -- timer for turning transparency on and off, flashing
     self.flashTimer = 0
 
+    self.exp = def.exp
+
     self.dead = false
     self.heartDropped = false
 end

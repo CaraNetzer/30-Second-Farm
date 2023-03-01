@@ -16,10 +16,12 @@ function FadeInState:init(color, time, onFadeComplete)
     self.time = time
 
     Timer.tween(self.time, {
-        [self] = {opacity = 1}
+        [self] = {opacity = .5}
     })
     :finish(function()
-        gStateMachine:change('play')
+        gStateMachine:change('play', {
+            exp = exp
+        })
         onFadeComplete()
     end)
 end

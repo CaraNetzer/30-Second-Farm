@@ -8,6 +8,7 @@ function Farm:init(def)
     self.grass = {}
     self.mole1 = def.mole1
     self.mole2 = def.mole2
+    
 
     --VIRTUAL_WIDTH = 384 - 9 = 375 (15 tiles wide)
     --VIRTUAL_HEIGHT = 216 - 16 = 200 (8 tiles tall)

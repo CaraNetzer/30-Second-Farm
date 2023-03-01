@@ -8,7 +8,7 @@
 
 FadeOutState = Class{__includes = BaseState}
 
-function FadeOutState:init(color, time, onFadeComplete)
+function FadeOutState:init(color, time, onFadeComplete, exp)
     self.opacity = 1
     self.r = color.r
     self.g = color.g
@@ -19,7 +19,9 @@ function FadeOutState:init(color, time, onFadeComplete)
         [self] = {opacity = 0}
     })
     :finish(function()
-        gStateMachine:change('fade-in')
+        gStateMachine:change('fade-in', {
+            exp = exp
+        })
         onFadeComplete()
     end)
 end

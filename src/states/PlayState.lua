@@ -1,7 +1,7 @@
 
 PlayState = Class{__includes = BaseState}
 
-function PlayState:init()
+function PlayState:init(def)
     self.player = Player {
         animations = ENTITY_DEFS['player'].animations,
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
@@ -13,7 +13,8 @@ function PlayState:init()
         height = 22,
 
         -- rendering and collision offset for spaced sprites
-        offsetY = 5
+        offsetY = 5,
+        exp = def.exp
     }
 
     self.mole1 = Mole {
@@ -42,15 +43,17 @@ function PlayState:init()
     self.waitTimer = 0
     self.glowWaitDuration = 4
     self.glowWaitTimer = 0
+    self.pauseTimer = 0
 
     self.backpack = {}
     self.level = 1
+    self.levelUp = self.level * 100 * 1.25
 
     self.dayTime = true
     self.chestGlowBool = false
     self.chestGlowOpacity = false
 
-    self.timer = 2
+    self.timer = 20
     -- subtract 1 from timer every second
     Timer.every(1, function()
         self.timer = self.timer - 1
@@ -59,6 +62,12 @@ function PlayState:init()
         if self.timer <= 5 then
             --gSounds['clock']:play()
         end
+    end)
+
+    Event.on('new-day', function()
+        gStateMachine:change('fade-out', {
+            exp = self.player.exp
+        })
     end)
 
    
@@ -102,10 +111,11 @@ function PlayState:chestGlow(dt)
     -- end)
 end
 
+
 function PlayState:update(dt)
     
     
-    self.farm:update()
+    self.farm:update(dt)
 
     if self.dayTime then
         self.mole1:update(dt)
@@ -123,9 +133,43 @@ function PlayState:update(dt)
      if self.timer <= 0 then
         Timer.clear()
         self.dayTime = false
-        self.chestGlowB = true
+        self.chestGlowBool = true
         self.plants = {}
         self:chestGlow(dt) --flash light around chest
+    end
+
+
+    --when the timer has run down, place the collected plants in the chest
+    if self.dayTime == false and self.player.x >= VIRTUAL_WIDTH - 22 - 22 and (self.player.y >= VIRTUAL_HEIGHT/2 + 4 - 22 and self.player.y <= VIRTUAL_HEIGHT/2 + 4 + CHEST_HEIGHT +5) then
+        --if player is next to the chest
+        if love.keyboard.wasPressed('i') and #self.backpack > 0 then
+            gSounds['sell-inventory']:stop()
+            gSounds['sell-inventory']:play()
+            
+            
+            --add up experience points based on plant type
+            local total = 0
+            for p, plant in pairs(self.backpack) do
+                local value = plant.set * 5
+                total = total + value
+                print(total)
+            end
+
+            self.player.exp = self.player.exp + total
+
+            if self.player.exp > self.levelUp then
+                self.level = self.level + 1
+            end
+            
+            --empty backpack
+            self.backpack = {}              
+        end
+
+        local wait = 2
+        self.pauseTimer = self.pauseTimer + dt
+        if self.pauseTimer > wait then
+            Event.dispatch('new-day')
+        end
     end
 
     
@@ -348,9 +392,12 @@ function PlayState:render()
         healthLeft = healthLeft - 1
     end
 
+    --print(self.exp)
+    --print(self.levelUp)
     --level and backpack GUI
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.printf('Level: ' .. self.level, 0, 2, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp), 250, 2, VIRTUAL_WIDTH)
     love.graphics.printf('Plants: ' .. #self.backpack, 0, 2, VIRTUAL_WIDTH, 'right')
     love.graphics.printf('Timer: ' .. tostring(self.timer), 16*3+20, 0, VIRTUAL_WIDTH)
 
