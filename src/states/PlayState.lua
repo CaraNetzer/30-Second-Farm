@@ -40,15 +40,17 @@ function PlayState:init()
 
     self.waitDuration = 0
     self.waitTimer = 0
+    self.glowWaitDuration = 4
+    self.glowWaitTimer = 0
 
     self.backpack = {}
     self.level = 1
 
     self.dayTime = true
-    self.chestGlow = false
-    self.chestGlowOpacity = 0
+    self.chestGlowBool = false
+    self.chestGlowOpacity = false
 
-    self.timer = 10
+    self.timer = 2
     -- subtract 1 from timer every second
     Timer.every(1, function()
         self.timer = self.timer - 1
@@ -57,15 +59,9 @@ function PlayState:init()
         if self.timer <= 5 then
             --gSounds['clock']:play()
         end
-
-        Timer.tween(.5, {
-            [self] = { chestGlowOpacity = 1 }
-        })
-        print(self.chestGlowOpacity)
-        self.chestGlowOpacity = 0
     end)
 
-    
+   
 
 end
 
@@ -88,7 +84,26 @@ function PlayState:growPlants(plant, dt)
     end
 end
 
+function PlayState:chestGlow(dt)
+    
+        self.glowWaitDuration = .65
+        self.glowWaitTimer = self.glowWaitTimer + dt
+
+        if self.glowWaitTimer > self.glowWaitDuration then
+            -- if timer is up, change chest glow off or on
+            self.chestGlowOpacity = not self.chestGlowOpacity
+
+            self.glowWaitTimer = 0
+                          
+        end
+    
+    -- Timer.every(0.5, function()
+    --     self.chestGlowOpacity = not self.chestGlowOpacity
+    -- end)
+end
+
 function PlayState:update(dt)
+    
     
     self.farm:update()
 
@@ -108,18 +123,12 @@ function PlayState:update(dt)
      if self.timer <= 0 then
         Timer.clear()
         self.dayTime = false
-        self.chestGlow = true
+        self.chestGlowB = true
         self.plants = {}
+        self:chestGlow(dt) --flash light around chest
     end
 
-    -- if self.chestGlow then
-    --     Timer.every(1, function()
-    --         Timer.tween(.5, {
-    --             [self] = { chestGlowOpacity = 1 }
-    --         })
-            
-    --     end)
-    -- end
+    
 
     --if player is located within the garden
     if (self.player.mapX >= 5 and self.player.mapX <= 13 and self.player.mapY >= 2 and self.player.mapY <= 8) then
@@ -288,6 +297,7 @@ function PlayState:update(dt)
     elseif not love.keyboard.isDown('s', 'w', 'd', 'a') then
         self.player:changeAnimation('idle-' .. self.player.direction)
     end
+
 end
 
 function PlayState:render()  
@@ -307,10 +317,10 @@ function PlayState:render()
         self.mole2:render()        
     end
 
-    if self.chestGlow then
-        print(self.chestGlowOpacity)
-        love.graphics.setColor(255, 223, 0, self.chestGlowOpacity)
-        love.graphics.rectangle('line', VIRTUAL_WIDTH - 25, VIRTUAL_HEIGHT/2, CHEST_WIDTH, CHEST_HEIGHT)
+    if self.chestGlowBool and self.chestGlowOpacity then
+        love.graphics.setColor(255, 223, 0, 1)
+        --love.graphics.setLineWidth(.25)
+        love.graphics.rectangle('line', VIRTUAL_WIDTH - 25 + 3, VIRTUAL_HEIGHT/2 + 3, CHEST_WIDTH, CHEST_HEIGHT)
         love.graphics.setColor(1, 1, 1, 1)
     end
 
