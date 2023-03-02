@@ -7,7 +7,7 @@ function PlayState:enter(def)
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
         
         x = 67,
-        y = 95,
+        y = 115,
         
         width = 16,
         height = 22,
@@ -51,8 +51,14 @@ function PlayState:enter(def)
     self.pauseTimer = 0
 
     self.backpack = {}
-    self.levelUp = def.level * 100 * 1.25
-
+    
+    if def.level <= 3 then
+        self.levelUp = def.level * 100 * 1.25
+    elseif def.level > 3  and def.level <= 6 then
+        self.levelUp = def.level * 100 * 1.5
+    elseif def.level > 6 then
+        self.levelUp = def.level * 100 * 2
+    end
     self.dayTime = true
     self.chestGlowBool = false
     self.chestGlowOpacity = false
@@ -160,6 +166,9 @@ function PlayState:update(dt)
             local total = 0
             for p, plant in pairs(self.backpack) do
                 local value = plant.set * 5
+                if plant.set > 3 then
+                    value  = plant.set * 3
+                end
                 total = total + value
             end
 
@@ -405,11 +414,11 @@ function PlayState:render()
     --print(self.levelUp)
     --level and backpack GUI
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf('Level: ' .. self.player.level, 0, 2, VIRTUAL_WIDTH, 'center')
-    love.graphics.printf('Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp), 240, 2, VIRTUAL_WIDTH)
-    love.graphics.printf('Plants: ' .. #self.backpack, 0, 2, VIRTUAL_WIDTH, 'right')
-    love.graphics.printf('Timer: ' .. tostring(self.timer), 16*3+20, 0, VIRTUAL_WIDTH)
-    love.graphics.printf('Day: ' .. tostring(self.player.day), 0, 25, VIRTUAL_WIDTH)
+    love.graphics.printf('Timer: ' .. tostring(self.timer), 58, 2, VIRTUAL_WIDTH)
+    love.graphics.printf('Day: ' .. tostring(self.player.day), 125, 2, VIRTUAL_WIDTH)
+    love.graphics.printf('Level: ' .. self.player.level, 175, 2, VIRTUAL_WIDTH)
+    love.graphics.printf('Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp), 230, 2, VIRTUAL_WIDTH)
+    love.graphics.printf('Plants: ' .. #self.backpack, 315, 2, VIRTUAL_WIDTH)
 
     -- love.graphics.setColor(255, 0, 255, 255)
     -- love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)

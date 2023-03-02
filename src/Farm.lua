@@ -147,7 +147,7 @@ function Farm:render()
     end
 
     --house and chest
-    love.graphics.draw(gTextures['house'], 10, 20, 0, .75, .75)
+    love.graphics.draw(gTextures['house'], 10, 40, 0, .75, .75)
     love.graphics.draw(gTextures['chest'], VIRTUAL_WIDTH - 25, VIRTUAL_HEIGHT/2, 0, .25, .25)
 
     --love.graphics.setColor(255, 0, 255, 255)
