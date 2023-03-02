@@ -16,9 +16,11 @@ function StartState:update(dt)
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
         gStateMachine:change('play', {
-            exp = 0
+            exp = 0,
+            level = 1
         })
     end
+
 end
 
 

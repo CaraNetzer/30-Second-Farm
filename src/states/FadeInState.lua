@@ -9,18 +9,19 @@
 FadeInState = Class{__includes = BaseState}
 
 function FadeInState:enter(def)
-    self.r = 0
-    self.g = 0
-    self.b = 0
-    self.opacity = 0
+    self.r = 1
+    self.g = 1
+    self.b = 1
+    self.opacity = 1
     self.time = 1
 
     Timer.tween(self.time, {
-        [self] = {opacity = .5}
+        [self] = {opacity = 0}
     })
     :finish(function()
         gStateMachine:change('play', {
-            exp = def.exp
+            exp = def.exp,
+            level = def.level
         })
         --onFadeComplete()
     end)

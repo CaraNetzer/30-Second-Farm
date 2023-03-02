@@ -14,8 +14,11 @@ function PlayState:enter(def)
 
         -- rendering and collision offset for spaced sprites
         offsetY = 5,
-        exp = def.exp
+        exp = def.exp,
+        level = def.level
     }
+
+    self.player.level = def.level
 
     self.mole1 = Mole {
         --x = 200,
@@ -46,14 +49,13 @@ function PlayState:enter(def)
     self.pauseTimer = 0
 
     self.backpack = {}
-    self.level = 1
-    self.levelUp = self.level * 100 * 1.25
+    self.levelUp = def.level * 100 * 1.25
 
     self.dayTime = true
     self.chestGlowBool = false
     self.chestGlowOpacity = false
 
-    self.timer = 20
+    self.timer = 30
     -- subtract 1 from timer every second
     Timer.every(1, function()
         self.timer = self.timer - 1
@@ -66,7 +68,8 @@ function PlayState:enter(def)
 
     Event.on('new-day', function()
         gStateMachine:change('fade-in', {
-            exp = self.player.exp
+            exp = self.player.exp,
+            level = self.player.level
         })
     end)
 
@@ -160,7 +163,7 @@ function PlayState:update(dt)
             self.player.exp = self.player.exp + total
 
             if self.player.exp > self.levelUp then
-                self.level = self.level + 1
+                self.player.level = self.player.level + 1
             end
             
             --empty backpack
@@ -182,7 +185,7 @@ function PlayState:update(dt)
         if self.timer > 0 and love.keyboard.wasPressed('p') then
             
             local plant = {
-                set = math.random(1,self.level),
+                set = math.random(1,self.player.level),
                 sprite = 1,
                 gridX = self.player.mapX + 1,
                 gridY = self.player.mapY + 1,
@@ -398,7 +401,7 @@ function PlayState:render()
     --print(self.levelUp)
     --level and backpack GUI
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf('Level: ' .. self.level, 0, 2, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Level: ' .. self.player.level, 0, 2, VIRTUAL_WIDTH, 'center')
     love.graphics.printf('Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp), 250, 2, VIRTUAL_WIDTH)
     love.graphics.printf('Plants: ' .. #self.backpack, 0, 2, VIRTUAL_WIDTH, 'right')
     love.graphics.printf('Timer: ' .. tostring(self.timer), 16*3+20, 0, VIRTUAL_WIDTH)
