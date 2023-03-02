@@ -1,7 +1,7 @@
 
 PlayState = Class{__includes = BaseState}
 
-function PlayState:init(def)
+function PlayState:enter(def) 
     self.player = Player {
         animations = ENTITY_DEFS['player'].animations,
         walkSpeed = ENTITY_DEFS['player'].walkSpeed,
@@ -60,18 +60,21 @@ function PlayState:init(def)
 
         -- play warning sound on timer if we get low
         if self.timer <= 5 then
-            --gSounds['clock']:play()
+            gSounds['clock']:play()
         end
     end)
 
     Event.on('new-day', function()
-        gStateMachine:change('fade-out', {
+        gStateMachine:change('fade-in', {
             exp = self.player.exp
         })
     end)
 
-   
+    
+end
 
+function PlayState:init()
+    
 end
 
 function PlayState:growPlants(plant, dt)
@@ -152,7 +155,6 @@ function PlayState:update(dt)
             for p, plant in pairs(self.backpack) do
                 local value = plant.set * 5
                 total = total + value
-                print(total)
             end
 
             self.player.exp = self.player.exp + total

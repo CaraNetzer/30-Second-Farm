@@ -50,7 +50,8 @@ gSounds = {
     ['plant-blocked'] = love.audio.newSource('graphics/CantPlant.wav', 'static'),
     ['plant-collected'] = love.audio.newSource('graphics/plant-collected.wav', 'static'),
     ['hit-enemy'] = love.audio.newSource('graphics/hit_enemy.wav', 'static'),
-    ['sell-inventory'] = love.audio.newSource('graphics/inventory_sound_effects/leather_inventory.wav', 'static')
+    ['sell-inventory'] = love.audio.newSource('graphics/inventory_sound_effects/leather_inventory.wav', 'static'),
+    ['clock'] = love.audio.newSource('graphics/clock.wav', 'static')
 }
 
 --[[ 
