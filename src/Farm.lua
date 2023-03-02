@@ -126,7 +126,8 @@ function Farm:update(dt)
         self.player:goInvulnerable(1.5)
 
         if self.player.health == 0 then
-            gStateMachine:change('fade-out')
+            Timer.clear()
+            gStateMachine:change('game-over')
         end
     end
 

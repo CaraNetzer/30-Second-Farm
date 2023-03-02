@@ -27,12 +27,11 @@ function love.load()
     gStateMachine = StateMachine {
         ['start'] = function() return StartState() end,
         ['play'] = function() return PlayState() end,
-        ['fade-in'] = function() return FadeInState({
-            r = 1, g = 1, b = 1
-        }, 1, function() end) end,
+        ['fade-in'] = function() return FadeInState() end,
         ['fade-out'] = function() return FadeOutState({
             r = 1, g = 1, b = 1
-        }, 1, function() end) end
+        }, 1, function() end) end,
+        ['game-over'] = function() return GameOverState() end
     }
     gStateMachine:change('start')
 

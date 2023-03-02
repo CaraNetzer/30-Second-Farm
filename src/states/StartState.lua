@@ -10,14 +10,25 @@
 StartState = Class{__includes = BaseState}
 
 function StartState:update(dt)
+    gSounds['start-menu']:play()
+    
+    Timer.clear()
+
+    gSounds['game-over']:stop()
+    
     if love.keyboard.wasPressed('escape') then
         love.event.quit()
     end
 
     if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        gSounds['start-menu']:stop()
+        gSounds['farming']:setLooping(true)
+        gSounds['farming']:setVolume(.5)
+        gSounds['farming']:play()
         gStateMachine:change('play', {
             exp = 0,
-            level = 1
+            level = 1,
+            day = 1
         })
     end
 

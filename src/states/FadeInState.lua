@@ -21,7 +21,8 @@ function FadeInState:enter(def)
     :finish(function()
         gStateMachine:change('play', {
             exp = def.exp,
-            level = def.level
+            level = def.level,
+            day = def.day
         })
         --onFadeComplete()
     end)

@@ -13,6 +13,7 @@ require 'src/states/StartState'
 require 'src/states/PlayState'
 require 'src/states/FadeInState'
 require 'src/states/FadeOutState'
+require 'src/states/GameOverState'
 
 require 'src/StateMachine'
 require 'src/Constants'
@@ -51,7 +52,10 @@ gSounds = {
     ['plant-collected'] = love.audio.newSource('graphics/plant-collected.wav', 'static'),
     ['hit-enemy'] = love.audio.newSource('graphics/hit_enemy.wav', 'static'),
     ['sell-inventory'] = love.audio.newSource('graphics/inventory_sound_effects/leather_inventory.wav', 'static'),
-    ['clock'] = love.audio.newSource('graphics/clock.wav', 'static')
+    ['clock'] = love.audio.newSource('graphics/clock.wav', 'static'),
+    ['farming'] = love.audio.newSource('graphics/Move-Forward.wav', 'static'),
+    ['game-over'] = love.audio.newSource('graphics/Good-Fellow.wav', 'static'),
+    ['start-menu'] = love.audio.newSource('graphics/Cipher2.wav', 'static'),
 }
 
 --[[ 

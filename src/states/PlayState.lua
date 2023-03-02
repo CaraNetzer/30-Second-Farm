@@ -15,10 +15,12 @@ function PlayState:enter(def)
         -- rendering and collision offset for spaced sprites
         offsetY = 5,
         exp = def.exp,
-        level = def.level
+        level = def.level,
+        day = def.day
     }
 
     self.player.level = def.level
+    self.player.day = def.day
 
     self.mole1 = Mole {
         --x = 200,
@@ -69,7 +71,8 @@ function PlayState:enter(def)
     Event.on('new-day', function()
         gStateMachine:change('fade-in', {
             exp = self.player.exp,
-            level = self.player.level
+            level = self.player.level,
+            day = self.player.day + 1
         })
     end)
 
@@ -316,10 +319,6 @@ function PlayState:update(dt)
         end
     end
 
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
-        gStateMachine:change('start')
-    end
-
     self.player:update(dt)
 
 
@@ -402,9 +401,10 @@ function PlayState:render()
     --level and backpack GUI
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.printf('Level: ' .. self.player.level, 0, 2, VIRTUAL_WIDTH, 'center')
-    love.graphics.printf('Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp), 250, 2, VIRTUAL_WIDTH)
+    love.graphics.printf('Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp), 240, 2, VIRTUAL_WIDTH)
     love.graphics.printf('Plants: ' .. #self.backpack, 0, 2, VIRTUAL_WIDTH, 'right')
     love.graphics.printf('Timer: ' .. tostring(self.timer), 16*3+20, 0, VIRTUAL_WIDTH)
+    love.graphics.printf('Day: ' .. tostring(self.player.day), 0, 25, VIRTUAL_WIDTH)
 
     -- love.graphics.setColor(255, 0, 255, 255)
     -- love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
