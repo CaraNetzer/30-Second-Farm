@@ -33,7 +33,8 @@ gTextures = {
     ['house'] = love.graphics.newImage('graphics/house.png'),
     ['grass'] = love.graphics.newImage('graphics/grass.png'),
     ['moles'] = love.graphics.newImage('graphics/moles-transformed.png'),
-    ['hearts'] = love.graphics.newImage('graphics/hearts.png')
+    ['hearts'] = love.graphics.newImage('graphics/hearts.png'),
+    ['title'] = love.graphics.newImage('graphics/farm-title.png')
 }
 
 gFrames = {
@@ -58,15 +59,12 @@ gSounds = {
     ['start-menu'] = love.audio.newSource('graphics/Cipher2.wav', 'static'),
 }
 
---[[ 
+
 gFonts = {
-    ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
-    ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
-    ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
-    ['gothic-medium'] = love.graphics.newFont('fonts/GothicPixels.ttf', 16),
-    ['gothic-large'] = love.graphics.newFont('fonts/GothicPixels.ttf', 32),
-    ['zelda'] = love.graphics.newFont('fonts/zelda.otf', 64),
-    ['zelda-small'] = love.graphics.newFont('fonts/zelda.otf', 32)
+    ['fipps-small'] = love.graphics.newFont('graphics/fipps.otf', 8),
+    ['fipps-medium'] = love.graphics.newFont('graphics/fipps.otf', 16),
+    ['fipps-large'] = love.graphics.newFont('graphics/fipps.otf', 32),
+    ['farmer-large'] = love.graphics.newFont('graphics/hello-farmer-font/HelloFarmerRegular-8MrdD.otf', 64),
 }
 
- ]]
+

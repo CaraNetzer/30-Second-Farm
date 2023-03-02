@@ -7,13 +7,13 @@
     cogden@cs50.harvard.edu
 ]]
 
-GameOverState = Class{__includes = BaseState}
+YouWonState = Class{__includes = BaseState}
 
-function GameOverState:update(dt)
+function YouWonState:update(dt)
 
     
     gSounds['farming']:stop()
-    gSounds['game-over']:play()
+    gSounds['start-menu']:play()
 
     --Timer.after(2, function() gStateMachine:change('start') end)
 
@@ -29,16 +29,16 @@ end
 
 
 
-function GameOverState:render()
-
-    love.graphics.setFont(gFonts['fipps-medium'])
+function YouWonState:render()
 
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
+    --love.graphics.setFont(gFonts['zelda'])
     love.graphics.setColor(175/255, 53/255, 42/255, 1)
-    love.graphics.printf('Game Over', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('You Won!', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
 
+    --love.graphics.setFont(gFonts['zelda-small'])
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 64, VIRTUAL_WIDTH, 'center')
 

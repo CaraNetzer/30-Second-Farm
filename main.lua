@@ -31,7 +31,8 @@ function love.load()
         ['fade-out'] = function() return FadeOutState({
             r = 1, g = 1, b = 1
         }, 1, function() end) end,
-        ['game-over'] = function() return GameOverState() end
+        ['game-over'] = function() return GameOverState() end,
+        ['you-won'] = function() return YouWonState() end
     }
     gStateMachine:change('start')
 

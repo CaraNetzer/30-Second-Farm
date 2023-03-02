@@ -166,7 +166,11 @@ function PlayState:update(dt)
             self.player.exp = self.player.exp + total
 
             if self.player.exp > self.levelUp then
-                self.player.level = self.player.level + 1
+                if self.player.level < 9 then
+                    self.player.level = self.player.level + 1
+                else
+                    gStateMachine:change('you-won')     
+                end
             end
             
             --empty backpack
@@ -349,6 +353,7 @@ function PlayState:update(dt)
 end
 
 function PlayState:render()  
+    love.graphics.setFont(gFonts['fipps-small'])
     
     self.farm:render()
     
