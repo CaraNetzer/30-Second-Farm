@@ -91,6 +91,7 @@ function Farm:init(def)
             hole2Y = math.random(1, 6)
         end
 
+        --mole render is based on mapX and mapY
         self.mole1.mapX = hole1X
         self.mole1.mapY = hole1Y
         self.mole2.mapX = hole2X

@@ -13,12 +13,15 @@ function PlayState:enter(def)
         height = 22,
 
         -- rendering and collision offset for spaced sprites
-        offsetY = 5,
+        --the garden is not centered at an x,y location that would perfectly fit our tile size, so an off set is used
+        offsetY = 5, 
+        
         exp = def.exp,
         level = def.level,
         day = def.day
     }
 
+    --not sure why I needed to set these again outside the Player definition, but wouldn't work w/o it
     self.player.level = def.level
     self.player.day = def.day
 
@@ -52,6 +55,7 @@ function PlayState:enter(def)
 
     self.backpack = {}
     
+    --experience/level up algorithm
     if def.level <= 3 then
         self.levelUp = def.level * 100 * 1.25
     elseif def.level > 3  and def.level <= 6 then
@@ -86,10 +90,12 @@ function PlayState:enter(def)
 end
 
 function PlayState:init()
-    
+    --moved everything from init() to enter() to accomodate passing defs between states
 end
 
 function PlayState:growPlants(plant, dt)
+
+    --basically the animation:update() algorithm
     if self.waitDuration == 0 then
         self.waitDuration = math.random(10)
     else
@@ -108,8 +114,9 @@ function PlayState:growPlants(plant, dt)
     end
 end
 
-function PlayState:chestGlow(dt)
+function PlayState:chestGlow(dt) --to indicate where to put your plants at the end of a day
     
+    --not sure why I couldn't use Timer.every for this, so used the manual timer algorithm
         self.glowWaitDuration = .65
         self.glowWaitTimer = self.glowWaitTimer + dt
 
@@ -144,7 +151,7 @@ function PlayState:update(dt)
         love.event.quit()
     end
 
-    if love.keyboard.wasPressed('m') then
+    if love.keyboard.wasPressed('m') then --go back to main menu
         gSounds['farming']:stop()
         gStateMachine:change('start')
     end
@@ -161,7 +168,7 @@ function PlayState:update(dt)
 
     --when the timer has run down, place the collected plants in the chest
     if self.dayTime == false and self.player.x >= VIRTUAL_WIDTH - 22 - 22 and (self.player.y >= VIRTUAL_HEIGHT/2 + 4 - 22 and self.player.y <= VIRTUAL_HEIGHT/2 + 4 + CHEST_HEIGHT +5) then
-        --if player is next to the chest
+        --if player is next to the chest then
         if love.keyboard.wasPressed('i') and #self.backpack > 0 then
             gSounds['sell-inventory']:stop()
             gSounds['sell-inventory']:play()
@@ -180,7 +187,7 @@ function PlayState:update(dt)
             self.player.exp = self.player.exp + total
 
             if self.player.exp > self.levelUp then
-                if self.player.level <= 7 then
+                if self.player.level <= 7 then --when you're on level 8, we don't want to add another level
                     self.player.level = self.player.level + 1
                 else
                     gStateMachine:change('you-won')  
@@ -191,6 +198,7 @@ function PlayState:update(dt)
             self.backpack = {}              
         end
 
+        --couldn't figure out how to use Timer.after here
         local wait = 2
         self.pauseTimer = self.pauseTimer + dt
         if self.pauseTimer > wait and #self.backpack == 0 and self.player.level <= 8 then
@@ -202,7 +210,7 @@ function PlayState:update(dt)
 
     --if player is located within the garden
     if (self.player.mapX >= 5 and self.player.mapX <= 13 and self.player.mapY >= 2 and self.player.mapY <= 8) then
-        --plant random seed based on player direction
+        --plant random seed based on player direction and level
         if self.timer > 0 and love.keyboard.wasPressed('p') then
             
             local plant = {
@@ -340,6 +348,7 @@ function PlayState:update(dt)
     self.player:update(dt)
 
 
+    --player animations
     if love.keyboard.isDown('a') then
         self.player.direction = 'left'
         self.player:changeAnimation('walk-left')
@@ -371,6 +380,7 @@ function PlayState:render()
     
     self.farm:render()
     
+    --render saplings and plants
     for i, plant in pairs(self.plants) do
         if plant.sprite%6 ~= 0 then --if the sprite is still a sapling
             love.graphics.draw(gTextures['plants'], gFrames['plants'][SAPLING_TILES[plant.set][plant.sprite]], plant.x, plant.y)
@@ -415,18 +425,20 @@ function PlayState:render()
         healthLeft = healthLeft - 1
     end
 
-    --print(self.exp)
-    --print(self.levelUp)
+
     --level and backpack GUI
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf('Day: ' .. tostring(self.player.day) .. "     " .. 
-        'Level: ' .. self.player.level  .. "     " .. 
+    love.graphics.printf('Day: ' .. tostring(self.player.day) .. "    " .. 
+        'Level: ' .. self.player.level  .. "    " .. 
         'Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp)  .. "     " .. 
         'Plants: ' .. #self.backpack .. "     " .. 
         'Timer: ' .. tostring(self.timer),
     
     4, 2, VIRTUAL_WIDTH)
 
+
+
+    --collision debugging
     -- love.graphics.setColor(255, 0, 255, 255)
     -- love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)
     -- love.graphics.rectangle('line', self.mole1.x, self.mole1.y, self.mole1.width, self.mole1.height)

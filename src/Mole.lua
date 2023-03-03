@@ -14,8 +14,6 @@ function Mole:init(def)
 
     self.currentAnimation = self.animations['moles']
 
-    
-
     -- timer for turning transparency on and off, flashing
     self.flashTimer = 0
 

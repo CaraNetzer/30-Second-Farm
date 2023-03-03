@@ -1,11 +1,3 @@
---[[ Credit to:
-
-    GD50
-    Legend of Zelda
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
 
 YouWonState = Class{__includes = BaseState}
 

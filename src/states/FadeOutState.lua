@@ -8,6 +8,9 @@
 
 FadeOutState = Class{__includes = BaseState}
 
+--didn't end up using this state, but kept as another model of how to do init vs enter
+--see state definition in main.lua
+--also could use this state to make the day transitions a bit more smooth
 function FadeOutState:init(color, time, onFadeComplete, exp)
     self.opacity = 1
     self.r = color.r

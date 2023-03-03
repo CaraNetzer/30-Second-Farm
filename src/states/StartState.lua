@@ -1,11 +1,4 @@
---[[ Credit to:
 
-    GD50
-    Legend of Zelda
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
 
 StartState = Class{__includes = BaseState}
 
@@ -93,15 +86,13 @@ end
 
 function StartState:render()
 
+    --grass background
     for i=0, VIRTUAL_WIDTH, TILE_SIZE do
         for j=0, VIRTUAL_HEIGHT, TILE_SIZE do
             love.graphics.draw(gTextures['grass'], gFrames['grass'][self.grassTile], i, j)
             
         end
     end
-
-    --love.graphics.setColor(0, 1, 153/255, 1)
-    --love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
     
     love.graphics.setFont(gFonts['fipps-medium'])    

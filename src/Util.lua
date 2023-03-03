@@ -1,14 +1,3 @@
---[[Credit to: 
-
-    GD50
-    Legend of Zelda
-
-    Util Class
-
-    Author: Colton Ogden
-    cogden@cs50.harvard.edu
-]]
-
 --[[
     Given an "atlas" (a texture with multiple sprites), as well as a
     width and a height for the tiles therein, split the texture into
@@ -46,7 +35,7 @@ function GenerateHouseQuads(atlas, tilewidth, tileheight)
     return spritesheet
 end
 
-function GenerateMoleQuads(atlas, tilewidth, tileheight)
+function GenerateMoleQuads(atlas, tilewidth, tileheight) --mole spritesheet not uniform
     local sheetWidth = atlas:getWidth() / tilewidth
     local sheetHeight = atlas:getHeight() / tileheight
 
