@@ -14,6 +14,7 @@ require 'src/states/PlayState'
 require 'src/states/FadeInState'
 require 'src/states/FadeOutState'
 require 'src/states/GameOverState'
+require 'src/states/YouWonState'
 
 require 'src/StateMachine'
 require 'src/Constants'
@@ -64,7 +65,7 @@ gFonts = {
     ['fipps-small'] = love.graphics.newFont('graphics/fipps.otf', 8),
     ['fipps-medium'] = love.graphics.newFont('graphics/fipps.otf', 16),
     ['fipps-large'] = love.graphics.newFont('graphics/fipps.otf', 32),
-    ['farmer-large'] = love.graphics.newFont('graphics/hello-farmer-font/HelloFarmerRegular-8MrdD.otf', 64),
+    ['arcade-small'] = love.graphics.newFont('graphics/arcade/arcade.ttf', 15),
 }
 
 

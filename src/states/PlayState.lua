@@ -144,6 +144,11 @@ function PlayState:update(dt)
         love.event.quit()
     end
 
+    if love.keyboard.wasPressed('m') then
+        gSounds['farming']:stop()
+        gStateMachine:change('start')
+    end
+
      -- moles stop, plants clear, chest glows if time runs out
      if self.timer <= 0 then
         Timer.clear()
@@ -175,10 +180,10 @@ function PlayState:update(dt)
             self.player.exp = self.player.exp + total
 
             if self.player.exp > self.levelUp then
-                if self.player.level < 9 then
+                if self.player.level <= 7 then
                     self.player.level = self.player.level + 1
                 else
-                    gStateMachine:change('you-won')     
+                    gStateMachine:change('you-won')  
                 end
             end
             
@@ -188,7 +193,7 @@ function PlayState:update(dt)
 
         local wait = 2
         self.pauseTimer = self.pauseTimer + dt
-        if self.pauseTimer > wait then
+        if self.pauseTimer > wait and #self.backpack == 0 and self.player.level <= 8 then
             Event.dispatch('new-day')
         end
     end
@@ -405,7 +410,7 @@ function PlayState:render()
         end
 
         love.graphics.draw(gTextures['hearts'], gFrames['hearts'][heartFrame],
-            (i - 1) * (TILE_SIZE + 1), 2)
+           2 + (i - 1) * (TILE_SIZE + 1), 22)
         
         healthLeft = healthLeft - 1
     end
@@ -414,11 +419,13 @@ function PlayState:render()
     --print(self.levelUp)
     --level and backpack GUI
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf('Timer: ' .. tostring(self.timer), 58, 2, VIRTUAL_WIDTH)
-    love.graphics.printf('Day: ' .. tostring(self.player.day), 125, 2, VIRTUAL_WIDTH)
-    love.graphics.printf('Level: ' .. self.player.level, 175, 2, VIRTUAL_WIDTH)
-    love.graphics.printf('Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp), 230, 2, VIRTUAL_WIDTH)
-    love.graphics.printf('Plants: ' .. #self.backpack, 315, 2, VIRTUAL_WIDTH)
+    love.graphics.printf('Day: ' .. tostring(self.player.day) .. "     " .. 
+        'Level: ' .. self.player.level  .. "     " .. 
+        'Exp: ' .. tostring(self.player.exp) .. '/' .. tostring(self.levelUp)  .. "     " .. 
+        'Plants: ' .. #self.backpack .. "     " .. 
+        'Timer: ' .. tostring(self.timer),
+    
+    4, 2, VIRTUAL_WIDTH)
 
     -- love.graphics.setColor(255, 0, 255, 255)
     -- love.graphics.rectangle('line', self.player.x, self.player.y, self.player.width, self.player.height)

@@ -40,7 +40,7 @@ function GameOverState:render()
     love.graphics.printf('Game Over', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
 
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 64, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 20, VIRTUAL_WIDTH, 'center')
 
     
 end

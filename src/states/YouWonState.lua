@@ -34,13 +34,14 @@ function YouWonState:render()
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.rectangle("fill", 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
-    --love.graphics.setFont(gFonts['zelda'])
-    love.graphics.setColor(175/255, 53/255, 42/255, 1)
-    love.graphics.printf('You Won!', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
 
-    --love.graphics.setFont(gFonts['zelda-small'])
+    love.graphics.setFont(gFonts['fipps-medium']) 
+    love.graphics.setColor(153/255, 240/255, 149/255, 1)
+    love.graphics.printf('You Won!', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
+    
+    love.graphics.setFont(gFonts['fipps-small']) 
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 64, VIRTUAL_WIDTH, 'center')
+    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2 + 12, VIRTUAL_WIDTH, 'center')
 
     
 end
