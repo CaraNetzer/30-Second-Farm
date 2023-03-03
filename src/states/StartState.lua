@@ -12,12 +12,28 @@ StartState = Class{__includes = BaseState}
 function StartState:init()
     self.grassTile = math.random(2) == 1 and 46 or 47
 
-    self.plant = math.random(1,8)    
+    self.plant = 1    
     
     self.pauseTimer = 0
+    self.blinkTimer = 0
+    
+    self.enterBlink = true
 
     Event.on('switch-plant', function()
-        self.plant = math.random(1,8)
+        if self.plant < 8 then
+            self.plant = self.plant + 1
+        else
+            self.plant = 1
+        end
+    end)
+
+    Event.on('blink', function()
+        self.enterBlink = not self.enterBlink
+        if self.blink == true then --shorter off period than on period
+            self.blinkTimer = 0
+        else 
+            self.blinkTimer = .5
+        end
     end)
     
 end
@@ -45,11 +61,23 @@ function StartState:update(dt)
         })
     end
 
-    local wait = 1
+    local wait = .5
     self.pauseTimer = self.pauseTimer + dt
     if self.pauseTimer > wait then
         Event.dispatch('switch-plant')
         self.pauseTimer = 0
+    end
+    
+    local blink = .8
+    self.blinkTimer = self.blinkTimer + dt
+    if self.blinkTimer > blink then
+        --Event.dispatch('blink')
+        self.enterBlink = not self.enterBlink
+        if self.enterBlink == true then --shorter off period than on period
+            self.blinkTimer = 0
+        else 
+            self.blinkTimer = .25
+        end
     end
 
 end
@@ -74,9 +102,10 @@ function StartState:render()
     love.graphics.setColor(242/255, 255/255, 209/255, 1)
     love.graphics.printf('30 Second Farm', 0, VIRTUAL_HEIGHT / 2 - 50, VIRTUAL_WIDTH, 'center')
     
-    love.graphics.setColor(242/255, 255/255, 209/255, 1)
-    love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
-    
+    if self.enterBlink then
+        --love.graphics.setColor(242/255, 255/255, 209/255, 1)
+        love.graphics.printf('Press Enter', 0, VIRTUAL_HEIGHT / 2, VIRTUAL_WIDTH, 'center')
+    end
     
     --render decorative plants
     love.graphics.setColor(1, 1, 1, 1)
