@@ -18,6 +18,10 @@ I really enjoyed figuring out the algorithms for planting and growing seeds, mol
 - Discover all 8 plants to win!
 - In game, press m to return to the main menu
 
+# Demo
+
+https://youtu.be/s5Cf9bQtLks
+
 
 # Future features:
 - Wiggle plants once grown
